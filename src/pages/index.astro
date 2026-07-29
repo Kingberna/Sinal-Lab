@@ -40,45 +40,6 @@ const homeFaq = [
   },
 ];
 
-const homeProcess = [
-  {
-    number: '01',
-    title: 'Diagnóstico',
-    text: 'O negócio, o público e o problema certo.',
-    image: '/images/process/01-diagnostico.webp',
-  },
-  {
-    number: '02',
-    title: 'Estratégia',
-    text: 'Prioridades, estrutura e conteúdos.',
-    image: '/images/process/02-estrategia.webp',
-  },
-  {
-    number: '03',
-    title: 'UX & visual',
-    text: 'Percursos claros e uma direção própria.',
-    image: '/images/process/03-ux-visual.webp',
-  },
-  {
-    number: '04',
-    title: 'Desenvolvimento',
-    text: 'Uma base rápida, acessível e sustentável.',
-    image: '/images/process/04-desenvolvimento.webp',
-  },
-  {
-    number: '05',
-    title: 'Lançamento',
-    text: 'Testes, migração e publicação controlada.',
-    image: '/images/process/05-lancamento.webp',
-  },
-  {
-    number: '06',
-    title: 'Evolução',
-    text: 'Aprender com o uso e melhorar com intenção.',
-    image: '/images/process/06-evolucao.webp',
-  },
-];
-
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -186,7 +147,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="process-preview" id="processo-preview">
+  <section class="process-preview">
     <div class="section-shell">
       <SectionIntro
         eyebrow="Processo"
@@ -194,24 +155,15 @@ const faqSchema = {
         text="Cada fase termina com uma decisão clara. Trabalhamos consigo, não atrás de uma cortina."
       />
       <ol class="process-track">
-        {homeProcess.map((step) => (
-          <li data-reveal>
-            <div class="process-card-media" aria-hidden="true">
-              <img
-                src={step.image}
-                alt=""
-                width="720"
-                height="720"
-                loading="lazy"
-                decoding="async"
-              />
-              <span class="process-number">{step.number}</span>
-            </div>
-            <div class="process-card-copy">
-              <h3>{step.title}</h3>
-              <p>{step.text}</p>
-            </div>
-          </li>
+        {[
+          ['01', 'Diagnóstico', 'O negócio, o público e o problema certo.'],
+          ['02', 'Estratégia', 'Prioridades, estrutura e conteúdos.'],
+          ['03', 'UX & visual', 'Percursos claros e uma direção própria.'],
+          ['04', 'Desenvolvimento', 'Uma base rápida, acessível e sustentável.'],
+          ['05', 'Lançamento', 'Testes, migração e publicação controlada.'],
+          ['06', 'Evolução', 'Aprender com o uso e melhorar com intenção.'],
+        ].map(([number, title, text]) => (
+          <li data-reveal><span>{number}</span><h3>{title}</h3><p>{text}</p></li>
         ))}
       </ol>
       <a class="text-link" href="/processo">Ver processo completo <span>↗</span></a>

@@ -1825,70 +1825,19 @@
   }
 
   .process-track li {
-    display: grid;
-    min-width: 0;
-    min-height: 28rem;
-    overflow: hidden;
+    min-height: 15rem;
+    padding: var(--space-md);
     list-style: none;
     border-right: 1px solid var(--ink);
     border-bottom: 1px solid var(--ink);
-    background: var(--paper);
   }
 
-  .process-card-media {
-    position: relative;
-    min-height: 18rem;
-    overflow: hidden;
-    border-bottom: 1px solid var(--ink);
-    background: #b7aaee;
-  }
-
-  .process-card-media::after {
-    position: absolute;
-    pointer-events: none;
-    content: "";
-    border: 1px solid rgb(242 240 232 / 44%);
-    inset: 0.75rem;
-  }
-
-  .process-card-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: scale(1.015);
-    transition: transform 0.65s var(--ease);
-  }
-
-  .process-track li:hover .process-card-media img {
-    transform: scale(1.055);
-  }
-
-  .process-number {
-    position: absolute;
-    z-index: 1;
-    top: 1rem;
-    left: 1rem;
-    display: grid;
-    width: 2.3rem;
-    height: 2.3rem;
-    border: 1px solid var(--ink);
-    border-radius: 50%;
-    place-items: center;
-    background: var(--paper);
+  .process-track span {
     font-size: 0.68rem;
   }
 
-  .process-card-copy {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    justify-content: flex-end;
-    min-height: 10rem;
-    padding: var(--space-md);
-  }
-
   .process-track h3 {
-    margin-bottom: 0.8rem;
+    margin-block: var(--space-lg) 1rem;
     font-size: var(--step-2);
   }
 
@@ -4328,34 +4277,6 @@
 
   .problem-grid article {
     min-height: 16rem;
-  }
-
-  .process-track li {
-    grid-template-columns: minmax(9.5rem, 0.9fr) 1.1fr;
-    min-height: 13rem;
-  }
-
-  .process-card-media {
-    min-height: 100%;
-    border-right: 1px solid var(--ink);
-    border-bottom: 0;
-  }
-
-  .process-card-media::after {
-    inset: 0.55rem;
-  }
-
-  .process-card-copy {
-    min-height: auto;
-    padding: 1.25rem;
-  }
-
-  .process-track h3 {
-    font-size: var(--step-1);
-  }
-
-  .process-track p {
-    font-size: 0.8rem;
   }
 
   .problem-answer {
