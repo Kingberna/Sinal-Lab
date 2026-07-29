@@ -49,3 +49,14 @@ test('projetos conceptuais são identificados explicitamente', async () => {
   assert.ok(projectCount >= 3);
   assert.match(source, /projeções|projections/i);
 });
+
+test('as capas editoriais dos Insights existem e estão configuradas', async () => {
+  const covers = [
+    'public/images/insights/investimento-website.webp',
+    'public/images/insights/redesign-website.webp',
+    'public/images/insights/website-redes-sociais.webp',
+  ];
+  const articles = await readFile(new URL('src/data/articles.ts', root), 'utf8');
+  await Promise.all(covers.map((path) => readFile(new URL(path, root))));
+  covers.forEach((path) => assert.match(articles, new RegExp(path.replace('public', ''))));
+});

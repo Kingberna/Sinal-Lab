@@ -10,6 +10,10 @@ export type Article = {
   title: string;
   description: string;
   category: 'Estratégia' | 'Redesign' | 'Conversão' | 'SEO';
+  cover?: {
+    src: string;
+    alt: string;
+  };
   publishedAt: string;
   updatedAt?: string;
   readingTime: string;
@@ -24,6 +28,10 @@ export const articles: Article[] = [
     description:
       'O que influencia o investimento num website para uma PME e como comparar propostas sem olhar apenas para o número final.',
     category: 'Estratégia',
+    cover: {
+      src: '/images/insights/investimento-website.webp',
+      alt: 'Composição editorial com um website modular, telemóvel e uma balança que representa o investimento digital.',
+    },
     publishedAt: '2026-07-18',
     readingTime: '7 min',
     intro:
@@ -69,6 +77,10 @@ export const articles: Article[] = [
     description:
       'Sinais práticos de que o website deixou de acompanhar o negócio — e quando uma melhoria pontual ainda é suficiente.',
     category: 'Redesign',
+    cover: {
+      src: '/images/insights/redesign-website.webp',
+      alt: 'Interface antiga e fragmentada a transformar-se num website moderno e organizado.',
+    },
     publishedAt: '2026-07-09',
     readingTime: '6 min',
     intro:
@@ -112,6 +124,10 @@ export const articles: Article[] = [
     description:
       'Como escolher a prioridade certa e construir uma presença digital que não dependa de um único canal.',
     category: 'Estratégia',
+    cover: {
+      src: '/images/insights/website-redes-sociais.webp',
+      alt: 'Website central ligado a vários canais de conteúdo digital independentes.',
+    },
     publishedAt: '2026-06-27',
     readingTime: '5 min',
     intro:
