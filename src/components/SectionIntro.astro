@@ -1,0 +1,17 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  text?: string;
+  theme?: 'light' | 'dark';
+}
+const { eyebrow, title, text, theme = 'light' } = Astro.props;
+---
+
+<div class:list={['section-intro', `section-intro--${theme}`]} data-reveal>
+  <span class="eyebrow">{eyebrow}</span>
+  <div>
+    <h2>{title}</h2>
+    {text && <p>{text}</p>}
+  </div>
+</div>

@@ -1,0 +1,87 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import CTA from '@/components/CTA.astro';
+import { projects } from '@/data/projects';
+
+const filters = ['Todos', 'Website', 'Redesign', 'E-commerce', 'Landing Page'];
+---
+
+<BaseLayout
+  title="Projetos"
+  description="Projetos conceito de websites, redesign, e-commerce e landing pages para saúde, construção, turismo, B2B e comércio."
+>
+  <PageHeader
+    eyebrow="Projetos"
+    title="Trabalho com intenção. Ideias com sinal."
+    intro="Projetos conceptuais criados para mostrar como estratégia, conteúdo e direção visual podem transformar negócios de setores diferentes."
+    theme="dark"
+    breadcrumbs={[{ label: 'Início', href: '/' }, { label: 'Projetos' }]}
+  />
+
+  <section class="portfolio-section section-shell">
+    <div class="portfolio-note" data-reveal>
+      <span class="signal-dot"></span>
+      <p>
+        <strong>Transparência primeiro:</strong> todos os exemplos abaixo são projetos conceito. Não representam clientes, resultados ou trabalhos encomendados.
+      </p>
+    </div>
+    <div class="filter-bar" role="group" aria-label="Filtrar projetos" data-reveal>
+      {filters.map((filter, index) => (
+        <button type="button" data-filter={filter} aria-pressed={index === 0 ? 'true' : 'false'}>{filter}</button>
+      ))}
+    </div>
+    <p class="filter-status sr-only" role="status" aria-live="polite" data-filter-status>{projects.length} projetos apresentados.</p>
+    <div class="portfolio-grid" data-project-grid>
+      {projects.map((project, index) => <ProjectCard project={project} featured={index === 0 || index === 3} />)}
+    </div>
+    <div class="empty-state" hidden data-empty-state>
+      <span>Sem resultados</span>
+      <h2>Não encontrámos projetos neste filtro.</h2>
+      <button class="button button--line" type="button" data-reset-filter>Mostrar todos</button>
+    </div>
+  </section>
+
+  <section class="concept-explainer">
+    <div class="section-shell">
+      <div data-reveal>
+        <span class="eyebrow">Porque projetos conceito?</span>
+        <h2>Demonstrar pensamento sem inventar experiência.</h2>
+      </div>
+      <div data-reveal>
+        <p>Um portefólio deve ajudar a avaliar raciocínio, detalhe e adequação ao problema — não servir para fabricar prova social.</p>
+        <p>À medida que projetos reais forem lançados e autorizados, esta estrutura está pronta para os receber.</p>
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    eyebrow="O seu setor não está aqui?"
+    title="Não precisamos de repetir uma fórmula."
+    text="Conhecemos o contexto primeiro e construímos uma direção adequada ao seu negócio, público e momento."
+  />
+</BaseLayout>
+
+<script>
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-project]'));
+  const status = document.querySelector<HTMLElement>('[data-filter-status]');
+  const empty = document.querySelector<HTMLElement>('[data-empty-state]');
+  const reset = document.querySelector<HTMLButtonElement>('[data-reset-filter]');
+
+  const applyFilter = (filter: string) => {
+    let visible = 0;
+    cards.forEach((card) => {
+      const matches = filter === 'Todos' || card.dataset.type === filter;
+      card.hidden = !matches;
+      if (matches) visible += 1;
+    });
+    buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.filter === filter)));
+    if (status) status.textContent = `${visible} ${visible === 1 ? 'projeto apresentado' : 'projetos apresentados'}.`;
+    if (empty) empty.hidden = visible > 0;
+  };
+
+  buttons.forEach((button) => button.addEventListener('click', () => applyFilter(button.dataset.filter || 'Todos')));
+  reset?.addEventListener('click', () => applyFilter('Todos'));
+</script>

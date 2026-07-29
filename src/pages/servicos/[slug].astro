@@ -1,0 +1,126 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import FAQ from '@/components/FAQ.astro';
+import CTA from '@/components/CTA.astro';
+import ServiceCard from '@/components/ServiceCard.astro';
+import { services, type Service } from '@/data/services';
+import { absoluteUrl } from '@/config/site';
+
+export const getStaticPaths = (() =>
+  services.map((service) => ({ params: { slug: service.slug }, props: { service } }))) satisfies GetStaticPaths;
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+const related = services.filter((item) => item.slug !== service.slug).slice(0, 2);
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.title,
+    description: service.summary,
+    provider: { '@id': `${absoluteUrl('/')}#organization` },
+    areaServed: { '@type': 'Country', name: 'Portugal' },
+    url: absoluteUrl(`/servicos/${service.slug}`),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: service.faq.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout title={service.title} description={service.summary} structuredData={schema}>
+  <PageHeader
+    eyebrow={`Serviço ${service.number}`}
+    title={service.title}
+    intro={service.summary}
+    theme={Number(service.number) % 2 === 0 ? 'dark' : 'paper'}
+    breadcrumbs={[
+      { label: 'Início', href: '/' },
+      { label: 'Serviços', href: '/servicos' },
+      { label: service.shortTitle },
+    ]}
+  />
+
+  <section class="service-audience section-shell">
+    <article data-reveal>
+      <span class="eyebrow">Para quem é</span>
+      <p>{service.forWhom}</p>
+    </article>
+    <article data-reveal>
+      <span class="eyebrow">O problema que resolve</span>
+      <p>{service.problem}</p>
+    </article>
+  </section>
+
+  <section class="included-section">
+    <div class="section-shell split-heading">
+      <div data-reveal>
+        <span class="eyebrow">O que está incluído</span>
+        <h2>Uma solução completa, sem camadas desnecessárias.</h2>
+      </div>
+      <ol class="included-list" data-reveal>
+        {service.includes.map((item, index) => <li><span>{String(index + 1).padStart(2, '0')}</span><p>{item}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="service-process section-shell">
+    <div class="service-process-head" data-reveal>
+      <span class="eyebrow">Como funciona</span>
+      <h2>Decisões por etapas. Progresso que consegue acompanhar.</h2>
+      <p>{service.timeframe}</p>
+    </div>
+    <ol>
+      {service.process.map((step, index) => (
+        <li data-reveal>
+          <span>{String(index + 1).padStart(2, '0')}</span>
+          <h3>{step.title}</h3>
+          <p>{step.text}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="outcomes-section">
+    <div class="section-shell">
+      <div class="outcomes-copy" data-reveal>
+        <span class="eyebrow">Resultados esperados</span>
+        <h2>Melhorias que fazem sentido medir.</h2>
+        <p>Sem garantias artificiais: definimos objetivos, instrumentamos o essencial e aprendemos com dados reais.</p>
+      </div>
+      <ul class="outcome-list">
+        {service.outcomes.map((outcome, index) => (
+          <li data-reveal><i aria-hidden="true">{String(index + 1).padStart(2, '0')}</i><span>{outcome}</span></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <FAQ items={service.faq} />
+
+  <section class="related-services section-shell">
+    <div class="small-section-head" data-reveal>
+      <span class="eyebrow">Pode também precisar de</span>
+      <h2>Serviços relacionados</h2>
+    </div>
+    <div class="service-cards">{related.map((item) => <ServiceCard service={item} />)}</div>
+  </section>
+
+  <CTA
+    eyebrow={service.shortTitle}
+    title={`Vamos perceber se ${service.shortTitle.toLowerCase()} é o passo certo.`}
+    text="Começamos pelo contexto e pelos objetivos. Se houver um caminho mais simples, também o dizemos."
+    secondaryHref={`/contacto?servico=${encodeURIComponent(service.shortTitle)}`}
+  />
+</BaseLayout>

@@ -1,0 +1,16 @@
+---
+import type { Service } from '@/data/services';
+interface Props { service: Service }
+const { service } = Astro.props;
+---
+
+<article class="service-card" data-reveal>
+  <a href={`/servicos/${service.slug}`}>
+    <span class="service-number">{service.number}</span>
+    <div>
+      <h3>{service.shortTitle}</h3>
+      <p>{service.summary}</p>
+    </div>
+    <i aria-hidden="true">↗</i>
+  </a>
+</article>

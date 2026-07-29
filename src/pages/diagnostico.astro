@@ -1,0 +1,52 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import ContactForm from '@/components/ContactForm.astro';
+---
+
+<BaseLayout
+  title="Diagnóstico gratuito do website"
+  description="Peça uma análise inicial gratuita ao seu website: clareza, credibilidade, experiência, performance e oportunidades de contacto."
+>
+  <PageHeader
+    eyebrow="Diagnóstico gratuito"
+    title="Descubra onde o seu website está a perder sinal."
+    intro="Partilhe o contexto e analisamos os principais bloqueios visíveis. Recebe uma resposta honesta, mesmo que o próximo passo não seja um redesign."
+    theme="signal"
+    breadcrumbs={[{ label: 'Início', href: '/' }, { label: 'Diagnóstico gratuito' }]}
+  />
+
+  <section class="diagnostic-explainer section-shell">
+    <div class="diagnostic-steps" data-reveal>
+      <span class="eyebrow">O que acontece a seguir</span>
+      <ol>
+        <li><span>01</span><div><h2>Envia o contexto</h2><p>O formulário demora cerca de 4 minutos e evita uma primeira chamada pouco produtiva.</p></div></li>
+        <li><span>02</span><div><h2>Analisamos os sinais</h2><p>Observamos clareza, confiança, mobile, performance visível e percursos de contacto.</p></div></li>
+        <li><span>03</span><div><h2>Recebe uma orientação</h2><p>Partilhamos prioridades iniciais e, se fizer sentido, propomos uma conversa.</p></div></li>
+      </ol>
+    </div>
+    <aside class="diagnostic-scope" data-reveal>
+      <div class="scope-radar" aria-hidden="true"><i></i><i></i><i></i><b></b></div>
+      <span class="eyebrow">Incluído na análise inicial</span>
+      <ul><li>Clareza da proposta</li><li>Confiança e credibilidade</li><li>Experiência mobile</li><li>Percurso de contacto</li><li>Sinais técnicos visíveis</li></ul>
+      <p><strong>Não é uma auditoria técnica completa.</strong> Para código, SEO aprofundado ou analytics, recomendamos um diagnóstico pago com acesso às ferramentas.</p>
+    </aside>
+  </section>
+
+  <section class="form-section">
+    <div class="section-shell form-layout">
+      <div class="form-intro" data-reveal>
+        <span class="eyebrow">O seu contexto</span>
+        <h2>Quanto mais claro for o ponto de partida, mais útil será a resposta.</h2>
+        <p>Os campos com * são obrigatórios. O orçamento é opcional e serve apenas para adequar recomendações.</p>
+      </div>
+      <ContactForm mode="diagnostic" />
+    </div>
+  </section>
+
+  <section class="diagnostic-trust section-shell">
+    <article data-reveal><span>01</span><h2>Sem pressão comercial</h2><p>O diagnóstico não o obriga a avançar com um projeto.</p></article>
+    <article data-reveal><span>02</span><h2>Sem promessas automáticas</h2><p>Não devolvemos uma pontuação genérica apresentada como estratégia.</p></article>
+    <article data-reveal><span>03</span><h2>Com privacidade</h2><p>Os dados são usados apenas para analisar e responder ao pedido.</p></article>
+  </section>
+</BaseLayout>

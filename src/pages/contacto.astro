@@ -1,0 +1,69 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import ContactForm from '@/components/ContactForm.astro';
+import FAQ from '@/components/FAQ.astro';
+import { siteConfig } from '@/config/site';
+
+const faq = [
+  {
+    question: 'O primeiro contacto tem custos?',
+    answer: 'Não. Serve para perceber contexto, adequação e próximo passo. Trabalho de auditoria, estratégia ou proposta detalhada é enquadrado antes de começar.',
+  },
+  {
+    question: 'Aceitam projetos urgentes?',
+    answer: 'Avaliamos a disponibilidade e o que é possível fazer bem no prazo. Quando uma data não é realista, preferimos dizer cedo e propor uma abordagem faseada.',
+  },
+  {
+    question: 'Trabalham com equipas internas ou outros parceiros?',
+    answer: 'Sim. Podemos colaborar com marketing, conteúdo, IT e fornecedores existentes, desde que responsabilidades e acessos fiquem claros.',
+  },
+];
+---
+
+<BaseLayout
+  title="Contacto"
+  description="Fale com a Sinal Studio sobre um novo website, redesign, loja online, campanha ou evolução da sua presença digital."
+>
+  <PageHeader
+    eyebrow="Contacto"
+    title="Conte-nos onde quer chegar."
+    intro="Pode trazer um briefing completo ou apenas um problema. Nós ajudamos a transformar contexto em próximos passos claros."
+    breadcrumbs={[{ label: 'Início', href: '/' }, { label: 'Contacto' }]}
+  />
+
+  <section class="contact-options section-shell">
+    <article data-reveal>
+      <span class="eyebrow">Diagnóstico</span>
+      <h2>Já tem website?</h2>
+      <p>Peça uma análise inicial gratuita aos sinais de clareza, experiência e conversão.</p>
+      <a class="text-link" href="/diagnostico">Pedir diagnóstico <span>↗</span></a>
+    </article>
+    <article data-reveal>
+      <span class="eyebrow">Email</span>
+      <h2>Prefere escrever diretamente?</h2>
+      <p><a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></p>
+      <small>{siteConfig.responseTime}</small>
+    </article>
+    <article data-reveal>
+      <span class="eyebrow">Chamada</span>
+      <h2>Quer falar primeiro?</h2>
+      {siteConfig.bookingUrl
+        ? <a class="text-link" href={siteConfig.bookingUrl} target="_blank" rel="noreferrer">Marcar chamada <span>↗</span></a>
+        : <p>Indique no formulário que prefere uma chamada e o melhor horário. Enviamos uma proposta de marcação por email.</p>}
+    </article>
+  </section>
+
+  <section class="form-section form-section--contact">
+    <div class="section-shell form-layout">
+      <div class="form-intro" data-reveal>
+        <span class="eyebrow">Novo pedido</span>
+        <h2>Vamos começar pelo essencial.</h2>
+        <p>Partilhe contexto suficiente para prepararmos uma resposta útil. Nunca usamos os seus dados para listas comerciais.</p>
+      </div>
+      <ContactForm />
+    </div>
+  </section>
+
+  <FAQ items={faq} title="Antes de enviar" />
+</BaseLayout>

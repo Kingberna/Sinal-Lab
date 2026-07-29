@@ -1,0 +1,8 @@
+packages:
+  - .
+
+allowBuilds:
+  esbuild: false
+
+overrides:
+  "@astrojs/compiler-rs": 0.3.1

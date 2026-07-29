@@ -1,0 +1,43 @@
+---
+import LegalPage from '@/components/LegalPage.astro';
+import { siteConfig } from '@/config/site';
+---
+
+<LegalPage
+  title="Informação legal"
+  description="Condições gerais de utilização deste website e informação institucional."
+>
+  <section>
+    <h2>1. Identificação</h2>
+    <p>Website apresentado sob a marca {siteConfig.name}, por {siteConfig.legalName}. Contacto: <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>.</p>
+    {siteConfig.legalTaxId && <p>NIF: {siteConfig.legalTaxId}.</p>}
+    {siteConfig.legalAddress && <p>Sede ou domicílio profissional: {siteConfig.legalAddress}.</p>}
+    {(!siteConfig.legalTaxId || !siteConfig.legalAddress) && (
+      <p class="legal-warning"><strong>Dados pendentes antes do lançamento comercial:</strong> denominação jurídica, NIF, sede ou domicílio profissional e, quando aplicável, informação de registo e Livro de Reclamações eletrónico.</p>
+    )}
+  </section>
+  <section>
+    <h2>2. Conteúdo do website</h2>
+    <p>Os conteúdos têm natureza informativa e podem ser atualizados sem aviso. Procuramos manter a informação clara e correta, mas uma proposta comercial ou contrato prevalece sobre descrições gerais do website.</p>
+  </section>
+  <section>
+    <h2>3. Projetos conceito</h2>
+    <p>Os projetos identificados como “Projeto conceito” são exercícios demonstrativos. Não representam clientes, contratos, resultados reais, testemunhos ou relações comerciais.</p>
+  </section>
+  <section>
+    <h2>4. Propriedade intelectual</h2>
+    <p>Textos, identidade, composições e código do website estão protegidos nos termos aplicáveis, sem prejuízo de componentes de terceiros sujeitos às respetivas licenças. A consulta do website não transfere direitos de utilização.</p>
+  </section>
+  <section>
+    <h2>5. Ligações externas</h2>
+    <p>As ligações para serviços externos são fornecidas por conveniência. As respetivas condições e políticas são da responsabilidade de cada fornecedor.</p>
+  </section>
+  <section>
+    <h2>6. Responsabilidade</h2>
+    <p>Não garantimos resultados comerciais, posições em motores de pesquisa ou taxas de conversão específicas. Qualquer projeção é identificada como objetivo ou cenário e depende de fatores externos ao website.</p>
+  </section>
+  <section>
+    <h2>7. Lei aplicável</h2>
+    <p>A informação legal definitiva deve identificar a lei aplicável e os mecanismos de resolução de litígios adequados à entidade e aos serviços efetivamente comercializados.</p>
+  </section>
+</LegalPage>

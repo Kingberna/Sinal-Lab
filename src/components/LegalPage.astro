@@ -1,0 +1,29 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+interface Props {
+  title: string;
+  description: string;
+  updated?: string;
+}
+const { title, description, updated = '29 de julho de 2026' } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="legal-page">
+    <header class="legal-hero section-shell">
+      <Breadcrumbs items={[{ label: 'Início', href: '/' }, { label: title }]} />
+      <span class="eyebrow">Informação e transparência</span>
+      <h1>{title}</h1>
+      <p>{description}</p>
+      <small>Última atualização: {updated}</small>
+    </header>
+    <div class="legal-layout section-shell">
+      <aside>
+        <span class="eyebrow">Nota importante</span>
+        <p>Este conteúdo deve ser revisto por aconselhamento jurídico antes do lançamento comercial e atualizado quando as ferramentas ou tratamentos de dados mudarem.</p>
+      </aside>
+      <div class="legal-content"><slot /></div>
+    </div>
+  </article>
+</BaseLayout>

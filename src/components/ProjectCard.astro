@@ -1,0 +1,34 @@
+---
+import type { Project } from '@/data/projects';
+import ProjectVisual from './ProjectVisual.astro';
+
+interface Props {
+  project: Project;
+  featured?: boolean;
+}
+
+const { project, featured = false } = Astro.props;
+const href = project.hasCaseStudy ? `/projetos/${project.slug}` : '/contacto?interesse=projeto';
+---
+
+<article
+  class:list={['project-card', featured && 'project-card--featured']}
+  data-project
+  data-sector={project.sector}
+  data-type={project.type}
+  data-reveal
+>
+  <a href={href} aria-label={`${project.title}, ${project.tag}`}>
+    <ProjectVisual project={project} />
+    <div class="project-meta">
+      <div>
+        <span>{project.tag}</span>
+        <h3>{project.title}</h3>
+      </div>
+      <p>{project.summary}</p>
+      <div class="project-tags">
+        <span>{project.sector}</span><span>{project.type}</span><i aria-hidden="true">↗</i>
+      </div>
+    </div>
+  </a>
+</article>

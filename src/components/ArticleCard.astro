@@ -1,0 +1,18 @@
+---
+import type { Article } from '@/data/articles';
+interface Props { article: Article; index?: number }
+const { article, index = 0 } = Astro.props;
+const formattedDate = new Intl.DateTimeFormat('pt-PT', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(article.publishedAt));
+---
+
+<article class="article-card" data-reveal>
+  <a href={`/insights/${article.slug}`}>
+    <div class:list={['article-art', `article-art--${(index % 4) + 1}`]} aria-hidden="true">
+      <span>{article.category}</span><i></i><i></i><i></i>
+    </div>
+    <div class="article-meta"><span>{article.category}</span><span>{formattedDate} · {article.readingTime}</span></div>
+    <h3>{article.title}</h3>
+    <p>{article.description}</p>
+    <span class="text-link">Ler artigo <i>↗</i></span>
+  </a>
+</article>

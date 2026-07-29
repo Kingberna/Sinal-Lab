@@ -1,0 +1,138 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import ProjectVisual from '@/components/ProjectVisual.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import CTA from '@/components/CTA.astro';
+import { caseStudies, projects, type Project } from '@/data/projects';
+
+export const getStaticPaths = (() =>
+  caseStudies.map((project) => ({ params: { slug: project.slug }, props: { project } }))) satisfies GetStaticPaths;
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const related = projects.filter((item) => item.slug !== project.slug).slice(0, 2);
+---
+
+<BaseLayout
+  title={`${project.title} — Caso de estudo conceptual`}
+  description={`${project.summary} Caso de estudo conceptual de estratégia, UX, direção visual e desenvolvimento.`}
+>
+  <article class:list={['case-study', `case-study--${project.palette}`]}>
+    <header class="case-hero">
+      <Breadcrumbs items={[
+        { label: 'Início', href: '/' },
+        { label: 'Projetos', href: '/projetos' },
+        { label: project.title },
+      ]} />
+      <div class="case-title" data-reveal>
+        <span class="eyebrow">{project.tag} · {project.sector}</span>
+        <h1>{project.title}</h1>
+        <p>{project.summary}</p>
+        <div class="case-tags"><span>{project.type}</span>{project.services?.slice(0, 3).map((item) => <span>{item}</span>)}</div>
+      </div>
+      <div class="case-hero-visual" data-reveal><ProjectVisual project={project} size="hero" /></div>
+    </header>
+
+    <section class="case-context section-shell">
+      <div data-reveal><span class="eyebrow">Contexto</span><h2>Uma marca conceptual. Um desafio realista.</h2></div>
+      <div data-reveal>
+        <p>{project.context}</p>
+        <p class="concept-label"><strong>Nota:</strong> este caso é um exercício conceptual. O cenário, a marca e os objetivos foram criados para demonstração e não correspondem a um cliente real.</p>
+      </div>
+    </section>
+
+    <section class="case-problem">
+      <div class="section-shell">
+        <span class="eyebrow" data-reveal>Problema inicial</span>
+        <blockquote data-reveal>{project.problem}</blockquote>
+        <div class="case-objectives">
+          <h2 data-reveal>Objetivos</h2>
+          <ol>
+            {project.objectives?.map((objective, index) => <li data-reveal><span>{String(index + 1).padStart(2, '0')}</span><p>{objective}</p></li>)}
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-strategy section-shell">
+      <div class="strategy-copy" data-reveal>
+        <span class="eyebrow">Estratégia</span>
+        <h2>Começar pelo percurso, não pela página inicial.</h2>
+        <p>{project.strategy}</p>
+      </div>
+      <div class="architecture-map" data-reveal>
+        <span class="eyebrow">Arquitetura de informação</span>
+        <ol>
+          {project.architecture?.map((item, index) => <li><i>{String(index + 1).padStart(2, '0')}</i><span>{item}</span></li>)}
+        </ol>
+      </div>
+    </section>
+
+    <section class="visual-direction">
+      <div class="section-shell visual-direction-head" data-reveal>
+        <span class="eyebrow">Direção visual</span>
+        <h2>Uma identidade que serve a experiência.</h2>
+        <p>{project.visualDirection}</p>
+      </div>
+      <div class="visual-crop" data-reveal><ProjectVisual project={project} size="hero" /></div>
+      <div class="type-specimen section-shell" aria-hidden="true" data-reveal>
+        <span>Aa</span><strong>{project.title}</strong><p>Clareza / Ritmo / Contraste / Sistema</p>
+      </div>
+    </section>
+
+    <section class="case-solution section-shell">
+      <div data-reveal>
+        <span class="eyebrow">Solução</span>
+        <h2>Desenhada para funcionar em contexto.</h2>
+      </div>
+      <ol>
+        {project.solution?.map((item, index) => <li data-reveal><span>{String(index + 1).padStart(2, '0')}</span><p>{item}</p></li>)}
+      </ol>
+    </section>
+
+    <section class="device-showcase">
+      <div class="desktop-device" data-reveal>
+        <div class="device-bar"><i></i><i></i><i></i><span>{project.title.toLowerCase().replace(' ', '')}.pt</span></div>
+        <ProjectVisual project={project} size="hero" />
+      </div>
+      <div class="mobile-device" data-reveal>
+        <div class="mobile-speaker"></div>
+        <ProjectVisual project={project} />
+      </div>
+    </section>
+
+    <section class="projections-section">
+      <div class="section-shell">
+        <div data-reveal>
+          <span class="eyebrow">Projeções, não resultados reais</span>
+          <h2>O que este conceito procuraria melhorar.</h2>
+          <p>Sem website publicado, não existem métricas reais. Estes pontos seriam objetivos a validar depois do lançamento.</p>
+        </div>
+        <ul>
+          {project.projections?.map((item) => <li data-reveal><span class="signal-dot"></span><p>{item}</p></li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section class="case-services section-shell" data-reveal>
+      <span class="eyebrow">Serviços considerados</span>
+      <div>{project.services?.map((service) => <span>{service}</span>)}</div>
+    </section>
+  </article>
+
+  <section class="more-projects section-shell">
+    <div class="small-section-head" data-reveal><span class="eyebrow">Continuar a explorar</span><h2>Outros projetos conceito</h2></div>
+    <div class="portfolio-grid">{related.map((item) => <ProjectCard project={item} />)}</div>
+  </section>
+
+  <CTA
+    eyebrow="Um desafio semelhante?"
+    title={`Vamos criar uma resposta própria para o seu negócio.`}
+    text="O processo começa pelo seu contexto real — não por adaptar este conceito."
+  />
+</BaseLayout>

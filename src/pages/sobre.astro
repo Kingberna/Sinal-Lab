@@ -1,0 +1,75 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import CTA from '@/components/CTA.astro';
+---
+
+<BaseLayout
+  title="Sobre"
+  description="A Sinal Studio cria websites claros, rápidos e orientados a resultados para negócios portugueses que querem crescer com credibilidade."
+>
+  <PageHeader
+    eyebrow="Sobre a Sinal"
+    title="Menos ruído. Mais direção."
+    intro="A Sinal Studio nasce para aproximar estratégia, design e tecnologia — e tornar bons negócios mais fáceis de compreender e escolher."
+    theme="signal"
+    breadcrumbs={[{ label: 'Início', href: '/' }, { label: 'Sobre' }]}
+  />
+
+  <section class="mission-section section-shell">
+    <span class="eyebrow" data-reveal>Missão</span>
+    <h2 data-reveal>Dar a empresas competentes uma presença digital que representa o valor que já criam.</h2>
+    <div class="mission-copy" data-reveal>
+      <p>Muitos negócios não precisam de mais uma ferramenta. Precisam de explicar melhor o que fazem, transmitir confiança e facilitar o primeiro passo.</p>
+      <p>É aí que trabalhamos: na ligação entre posicionamento, experiência e uma execução técnica sólida.</p>
+    </div>
+  </section>
+
+  <section class="philosophy-section">
+    <div class="section-shell">
+      <div class="philosophy-intro" data-reveal>
+        <span class="eyebrow">Filosofia</span>
+        <h2>O website não é o fim. É parte da relação.</h2>
+      </div>
+      <div class="philosophy-grid">
+        <article data-reveal><span>01</span><h3>Clareza é uma vantagem competitiva.</h3><p>Se o cliente percebe mais depressa, decide com mais confiança.</p></article>
+        <article data-reveal><span>02</span><h3>Design é uma decisão, não uma camada.</h3><p>Hierarquia, ritmo e detalhe existem para orientar, não apenas impressionar.</p></article>
+        <article data-reveal><span>03</span><h3>Tecnologia deve desaparecer no uso.</h3><p>Rápida, acessível e fácil de manter — sem complexidade exibida como valor.</p></article>
+        <article data-reveal><span>04</span><h3>Transparência faz parte do produto.</h3><p>Explicamos compromissos, limites e decisões sem esconder jargão numa proposta.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="collaboration-section section-shell">
+    <div data-reveal>
+      <span class="eyebrow">Como colaboramos</span>
+      <h2>Próximos do negócio. Exigentes com o trabalho.</h2>
+    </div>
+    <div class="collaboration-list">
+      <article data-reveal><span>01</span><div><h3>Um interlocutor claro</h3><p>Menos passagens de contexto e decisões mais rápidas.</p></div></article>
+      <article data-reveal><span>02</span><div><h3>Comunicação assíncrona quando ajuda</h3><p>Documentação acessível e reuniões reservadas para decisões.</p></div></article>
+      <article data-reveal><span>03</span><div><h3>Especialistas quando fazem diferença</h3><p>Integramos competências adicionais de forma transparente quando o projeto exige.</p></div></article>
+    </div>
+  </section>
+
+  <section class="future-team">
+    <div class="section-shell">
+      <div class="future-team-head" data-reveal>
+        <span class="eyebrow">Equipa</span>
+        <h2>Um estúdio preparado para crescer sem inventar pessoas.</h2>
+        <p>Esta área está pronta para apresentar a equipa quando existirem perfis públicos e autorizados.</p>
+      </div>
+      <div class="team-placeholder-grid" aria-label="Estrutura de equipa futura">
+        <article data-reveal><div class="team-signal"><i></i><i></i></div><span>Estratégia & conteúdo</span><small>Perfil a anunciar</small></article>
+        <article data-reveal><div class="team-signal"><i></i><i></i></div><span>Design & experiência</span><small>Perfil a anunciar</small></article>
+        <article data-reveal><div class="team-signal"><i></i><i></i></div><span>Desenvolvimento</span><small>Perfil a anunciar</small></article>
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    eyebrow="Trabalhar com a Sinal"
+    title="Procura um parceiro que explique o caminho?"
+    text="Conte-nos o contexto. Fazemos as perguntas certas antes de propor uma solução."
+  />
+</BaseLayout>

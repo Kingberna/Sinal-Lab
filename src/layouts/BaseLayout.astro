@@ -1,0 +1,122 @@
+---
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import CookieConsent from '@/components/CookieConsent.astro';
+import { absoluteUrl, siteConfig } from '@/config/site';
+import '@/styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  type?: 'website' | 'article';
+  publishedAt?: string;
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  path = Astro.url.pathname,
+  type = 'website',
+  publishedAt,
+  structuredData,
+  noindex = false,
+} = Astro.props;
+const fullTitle = title === siteConfig.name ? title : `${title} — ${siteConfig.name}`;
+const canonical = absoluteUrl(path);
+const socialImage = absoluteUrl('/og.png');
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': ['Organization', 'ProfessionalService'],
+    '@id': `${siteConfig.url}/#organization`,
+    name: siteConfig.name,
+    legalName: siteConfig.legalName,
+    url: siteConfig.url,
+    email: siteConfig.email,
+    ...(siteConfig.legalTaxId ? { taxID: siteConfig.legalTaxId } : {}),
+    ...(siteConfig.legalAddress
+      ? {
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: siteConfig.legalAddress,
+            addressCountry: 'PT',
+          },
+        }
+      : {}),
+    areaServed: { '@type': 'Country', name: 'Portugal' },
+    description: siteConfig.description,
+  },
+  ...(structuredData ? (Array.isArray(structuredData) ? structuredData : [structuredData]) : []),
+];
+---
+
+<!doctype html>
+<html lang={siteConfig.language}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f2f0e8" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:locale" content={siteConfig.locale} />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Sinal Studio — websites com sinal para crescer" />
+    {publishedAt && <meta property="article:published_time" content={publishedAt} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <title>{fullTitle}</title>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(schemas)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Saltar para o conteúdo</a>
+    <div class="scroll-progress" aria-hidden="true"></div>
+    <Header currentPath={Astro.url.pathname} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+    <CookieConsent domain={siteConfig.analytics.plausibleDomain} />
+    <script>
+      const progress = document.querySelector<HTMLElement>('.scroll-progress');
+      const updateProgress = () => {
+        const available = document.documentElement.scrollHeight - window.innerHeight;
+        if (progress) progress.style.transform = `scaleX(${available > 0 ? window.scrollY / available : 0})`;
+      };
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      updateProgress();
+
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+        );
+        document.querySelectorAll('[data-reveal]').forEach((element) => observer.observe(element));
+      } else {
+        document.querySelectorAll('[data-reveal]').forEach((element) => element.classList.add('is-visible'));
+      }
+    </script>
+  </body>
+</html>

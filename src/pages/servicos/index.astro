@@ -1,0 +1,95 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import ServiceCard from '@/components/ServiceCard.astro';
+import CTA from '@/components/CTA.astro';
+import { services } from '@/data/services';
+import { absoluteUrl } from '@/config/site';
+
+const serviceSchemas = services.map((service) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: service.title,
+  description: service.summary,
+  provider: { '@id': `${absoluteUrl('/') }#organization` },
+  areaServed: 'Portugal',
+  url: absoluteUrl(`/servicos/${service.slug}`),
+}));
+---
+
+<BaseLayout
+  title="Serviços de websites"
+  description="Estratégia, design, desenvolvimento, SEO e evolução para websites empresariais, redesigns, lojas online e campanhas."
+  structuredData={serviceSchemas}
+>
+  <PageHeader
+    eyebrow="Serviços"
+    title="Do problema ao website certo."
+    intro="Não começamos pela tecnologia. Começamos pelo que o negócio precisa de explicar, provar e facilitar."
+    breadcrumbs={[{ label: 'Início', href: '/' }, { label: 'Serviços' }]}
+  />
+
+  <section class="services-overview section-shell">
+    <div class="overview-lead" data-reveal>
+      <span class="eyebrow">Uma equipa, um fio condutor</span>
+      <p>
+        Estratégia, conteúdos, experiência e desenvolvimento são decisões ligadas.
+        <strong>Trabalhá-las em conjunto reduz ruído e produz um resultado mais coerente.</strong>
+      </p>
+    </div>
+    <div class="service-cards service-cards--large">
+      {services.map((service) => <ServiceCard service={service} />)}
+    </div>
+  </section>
+
+  <section class="engagements-section">
+    <div class="section-shell">
+      <div class="engagements-heading" data-reveal>
+        <span class="eyebrow">Formas de colaboração</span>
+        <h2>Um formato adequado ao momento.</h2>
+      </div>
+      <div class="engagement-grid">
+        <article data-reveal>
+          <span>01</span><h3>Projeto definido</h3>
+          <p>Para criar ou redesenhar uma presença digital com objetivo, âmbito, calendário e entregáveis claros.</p>
+          <small>Ideal para websites, lojas e campanhas.</small>
+        </article>
+        <article data-reveal>
+          <span>02</span><h3>Diagnóstico e plano</h3>
+          <p>Para perceber o que está a limitar o website antes de assumir uma reconstrução ou investimento maior.</p>
+          <small>Ideal para priorizar decisões.</small>
+        </article>
+        <article data-reveal>
+          <span>03</span><h3>Evolução contínua</h3>
+          <p>Para equipas que precisam de capacidade regular de design, conteúdo e desenvolvimento.</p>
+          <small>Ideal depois do lançamento.</small>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="fit-section section-shell">
+    <div class="fit-card fit-card--yes" data-reveal>
+      <span class="eyebrow">Fazemos bom par se</span>
+      <ul>
+        <li>Quer perceber as decisões, não apenas aprová-las.</li>
+        <li>Consegue envolver quem conhece o negócio.</li>
+        <li>Valoriza clareza, qualidade e uma base duradoura.</li>
+      </ul>
+    </div>
+    <div class="fit-card fit-card--no" data-reveal>
+      <span class="eyebrow">Provavelmente não somos a escolha certa se</span>
+      <ul>
+        <li>Procura apenas copiar rapidamente um concorrente.</li>
+        <li>Precisa de garantias de posição ou conversão.</li>
+        <li>Não existe disponibilidade para validar conteúdos e decisões.</li>
+      </ul>
+    </div>
+  </section>
+
+  <CTA
+    eyebrow="Primeiro passo"
+    title="Não sabe de que serviço precisa?"
+    text="É normal. Conte-nos o que está a acontecer; ajudamos a enquadrar o problema antes de falar em solução."
+  />
+</BaseLayout>

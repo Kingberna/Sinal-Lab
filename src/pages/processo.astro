@@ -1,0 +1,131 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import FAQ from '@/components/FAQ.astro';
+import CTA from '@/components/CTA.astro';
+
+const steps = [
+  {
+    number: '01',
+    title: 'Diagnóstico',
+    timeframe: '3–5 dias úteis',
+    description: 'Percebemos o negócio, os públicos, o ponto de partida e a decisão que o website precisa de facilitar.',
+    deliverables: ['Sessão de arranque', 'Auditoria inicial', 'Objetivos e critérios de sucesso', 'Plano de projeto'],
+    client: 'Partilha contexto, acessos disponíveis e envolve as pessoas que decidem.',
+  },
+  {
+    number: '02',
+    title: 'Estratégia e conteúdos',
+    timeframe: '1–2 semanas',
+    description: 'Transformamos informação dispersa numa estrutura clara, com mensagens orientadas às dúvidas reais dos clientes.',
+    deliverables: ['Mapa do website', 'Hierarquia de mensagens', 'Wireframes editoriais', 'Plano de conteúdos'],
+    client: 'Valida prioridades, fornece conhecimento do setor e revê conteúdos nos momentos combinados.',
+  },
+  {
+    number: '03',
+    title: 'UX e direção visual',
+    timeframe: '2–3 semanas',
+    description: 'Desenhamos percursos, componentes e uma linguagem visual própria que funciona em desktop e mobile.',
+    deliverables: ['Protótipos responsivos', 'Direção visual', 'Sistema de componentes', 'Estados de interação'],
+    client: 'Concentra feedback por ronda e decide com base nos objetivos acordados.',
+  },
+  {
+    number: '04',
+    title: 'Desenvolvimento',
+    timeframe: '2–4 semanas',
+    description: 'Construímos a experiência aprovada com atenção a acessibilidade, performance, SEO e manutenção.',
+    deliverables: ['Website funcional', 'Gestão de conteúdos acordada', 'Integrações', 'Ambiente de validação'],
+    client: 'Disponibiliza credenciais necessárias e valida conteúdos finais.',
+  },
+  {
+    number: '05',
+    title: 'Testes e lançamento',
+    timeframe: '3–5 dias úteis',
+    description: 'Testamos dispositivos, formulários, navegação, indexação e cenários de publicação antes de colocar no ar.',
+    deliverables: ['Plano de testes', 'Correções finais', 'Mapa de redirecionamentos', 'Checklist de lançamento'],
+    client: 'Faz a aceitação final e garante disponibilidade para os acessos de publicação.',
+  },
+  {
+    number: '06',
+    title: 'Suporte e crescimento',
+    timeframe: 'Contínuo ou por ciclos',
+    description: 'Acompanhamos o período pós-lançamento e priorizamos melhorias com base no uso real.',
+    deliverables: ['Suporte inicial', 'Documentação', 'Formação', 'Plano de evolução opcional'],
+    client: 'Partilha feedback comercial e dados relevantes para orientar novas decisões.',
+  },
+];
+
+const faq = [
+  {
+    question: 'Quantas rondas de alterações estão incluídas?',
+    answer:
+      'Cada proposta define as rondas por fase. O mais importante é que o feedback seja consolidado e ligado aos objetivos; assim evitamos ciclos sem direção.',
+  },
+  {
+    question: 'O que pode atrasar um projeto?',
+    answer:
+      'Conteúdos, acessos, feedback dividido e decisões sem responsável são os fatores mais frequentes. Planeamos estes pontos no arranque e sinalizamos riscos cedo.',
+  },
+  {
+    question: 'Podemos lançar por fases?',
+    answer:
+      'Sim. Quando o âmbito é grande ou existe uma data crítica, podemos priorizar uma primeira versão completa e útil, deixando evoluções claramente planeadas.',
+  },
+  {
+    question: 'Que ferramentas usam para colaborar?',
+    answer:
+      'Adaptamos a colaboração à equipa, mantendo uma fonte central de decisões e conteúdos. A ferramenta é menos importante do que responsabilidades e prazos claros.',
+  },
+];
+---
+
+<BaseLayout
+  title="Processo"
+  description="Conheça as seis fases do processo Sinal Studio: diagnóstico, estratégia, UX, desenvolvimento, lançamento e evolução."
+>
+  <PageHeader
+    eyebrow="Processo"
+    title="Clareza em cada fase. Qualidade no conjunto."
+    intro="Um processo leve, mas rigoroso. Sabe sempre o que estamos a decidir, o que precisa de validar e o que acontece a seguir."
+    breadcrumbs={[{ label: 'Início', href: '/' }, { label: 'Processo' }]}
+  />
+
+  <section class="process-principles section-shell">
+    <article data-reveal><span>01</span><h2>Decidir cedo</h2><p>As mudanças são mais simples quando a estrutura ainda está no papel.</p></article>
+    <article data-reveal><span>02</span><h2>Mostrar trabalho</h2><p>Partilhamos progresso em vez de desaparecer até uma grande apresentação.</p></article>
+    <article data-reveal><span>03</span><h2>Validar por objetivo</h2><p>O critério não é gosto pessoal; é adequação ao negócio e às pessoas.</p></article>
+  </section>
+
+  <section class="process-detail">
+    <div class="section-shell">
+      <div class="process-detail-intro" data-reveal>
+        <span class="eyebrow">Seis etapas</span>
+        <h2>Do primeiro diagnóstico a uma base preparada para evoluir.</h2>
+      </div>
+      <ol class="process-detail-list">
+        {steps.map((step) => (
+          <li data-reveal>
+            <div class="step-title"><span>{step.number}</span><h3>{step.title}</h3><small>{step.timeframe}</small></div>
+            <p class="step-description">{step.description}</p>
+            <div class="step-meta">
+              <div><strong>Entregáveis</strong><ul>{step.deliverables.map((item) => <li>{item}</li>)}</ul></div>
+              <div><strong>Da sua parte</strong><p>{step.client}</p></div>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="timeline-note section-shell" data-reveal>
+    <div class="timeline-dial" aria-hidden="true"><i></i><i></i><span>6—12</span></div>
+    <div>
+      <span class="eyebrow">Prazo indicativo</span>
+      <h2>Um website empresarial demora normalmente 6 a 12 semanas.</h2>
+      <p>O calendário final depende do âmbito, conteúdos, integrações e disponibilidade para decisões. A proposta inclui um plano realista para o seu caso.</p>
+    </div>
+  </section>
+
+  <FAQ items={faq} title="Dúvidas sobre a colaboração" />
+  <CTA title="Um bom projeto começa com a pergunta certa." />
+</BaseLayout>
