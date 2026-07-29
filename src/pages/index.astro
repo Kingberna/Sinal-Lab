@@ -196,20 +196,24 @@ const faqSchema = {
       <ol class="process-track">
         {homeProcess.map((step) => (
           <li data-reveal>
-            <div class="process-card-media" aria-hidden="true">
-              <img
-                src={step.image}
-                alt=""
-                width="720"
-                height="720"
-                loading="lazy"
-                decoding="async"
-              />
-              <span class="process-number">{step.number}</span>
-            </div>
+            <span class="process-number">{step.number}</span>
             <div class="process-card-copy">
               <h3>{step.title}</h3>
               <p>{step.text}</p>
+            </div>
+            <div class="process-figure" aria-hidden="true">
+              {['top', 'middle', 'bottom'].map((layer) => (
+                <span class={`process-figure-layer process-figure-layer--${layer}`}>
+                  <img
+                    src={step.image}
+                    alt=""
+                    width="720"
+                    height="720"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </span>
+              ))}
             </div>
           </li>
         ))}
