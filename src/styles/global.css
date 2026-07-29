@@ -1519,6 +1519,37 @@
     padding-right: var(--space-lg);
   }
 
+  .home-hero-eyebrow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    align-items: center;
+  }
+
+  .hero-brand-word {
+    display: inline-flex;
+    gap: 0.48rem;
+    align-items: center;
+    padding: 0.42rem 0.7rem 0.42rem 0.58rem;
+    border-radius: 999px;
+    color: var(--paper);
+    background: var(--ink);
+    box-shadow: 0 0 0 1px var(--ink);
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .hero-brand-word::before {
+    width: 0.5rem;
+    height: 0.5rem;
+    border: 1px solid var(--paper);
+    border-radius: 50%;
+    background: var(--signal);
+    box-shadow: 0 0 0 0.18rem rgb(255 88 56 / 18%);
+    content: '';
+  }
+
   .home-hero h1 {
     max-width: 70rem;
     margin-block: 1rem var(--space-lg);
