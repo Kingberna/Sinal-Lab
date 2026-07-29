@@ -49,3 +49,23 @@ test('projetos conceptuais são identificados explicitamente', async () => {
   assert.ok(projectCount >= 3);
   assert.match(source, /projeções|projections/i);
 });
+
+test('a homepage inclui os seis visuais otimizados do processo', async () => {
+  const source = await readFile(new URL('src/pages/index.astro', root), 'utf8');
+  const filenames = [
+    '01-diagnostico.webp',
+    '02-estrategia.webp',
+    '03-ux-visual.webp',
+    '04-desenvolvimento.webp',
+    '05-lancamento.webp',
+    '06-evolucao.webp',
+  ];
+
+  await Promise.all(
+    filenames.map(async (filename) => {
+      assert.match(source, new RegExp(filename.replace('.', '\\.')));
+      const file = await readFile(new URL(`public/images/process/${filename}`, root));
+      assert.ok(file.byteLength > 5_000);
+    }),
+  );
+});
