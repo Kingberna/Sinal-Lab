@@ -5399,6 +5399,15 @@
     border-radius: 0;
   }
 
+  .website-frame__video {
+    display: block;
+    width: 100%;
+    height: 31rem;
+    background: var(--ink);
+    object-fit: cover;
+    object-position: center;
+  }
+
   .website-frame--phone .website-frame__screen > .project-visual {
     min-height: 26rem;
   }
@@ -6224,7 +6233,9 @@
       width: 96%;
     }
 
-    .home-product-browser .website-frame__screen > .project-visual {
+    .home-product-browser .website-frame__screen > .project-visual,
+    .home-product-browser .website-frame__video {
+      height: 24rem;
       min-height: 24rem;
     }
 
