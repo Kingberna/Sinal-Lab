@@ -6284,111 +6284,6 @@
     transform: none;
   }
 
-  .home-device-experience {
-    position: relative;
-    overflow: hidden;
-    padding-block: clamp(6rem, 9vw, 9rem);
-    isolation: isolate;
-    color: var(--paper);
-    background:
-      radial-gradient(circle at 72% 42%, rgb(83 104 255 / 22%), transparent 35%),
-      var(--ink);
-  }
-
-  .home-device-experience::before {
-    position: absolute;
-    z-index: -1;
-    opacity: 0.14;
-    background-image:
-      linear-gradient(var(--line-light) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line-light) 1px, transparent 1px);
-    background-size: clamp(4rem, 7vw, 7rem) clamp(4rem, 7vw, 7rem);
-    content: '';
-    inset: 0;
-    mask-image: linear-gradient(to bottom, #000, transparent 94%);
-  }
-
-  .home-device-heading {
-    display: grid;
-    grid-template-columns: minmax(9rem, 0.35fr) minmax(0, 1.05fr) minmax(16rem, 0.6fr);
-    gap: var(--space-lg);
-    align-items: end;
-  }
-
-  .home-device-heading h2 {
-    max-width: 60rem;
-    font-size: clamp(3.5rem, 6vw, 7rem);
-    line-height: 0.9;
-    letter-spacing: -0.065em;
-  }
-
-  .home-device-heading p {
-    max-width: 29rem;
-    color: rgb(242 240 232 / 64%);
-    font-size: var(--step-1);
-  }
-
-  .home-device-composition {
-    position: relative;
-    min-height: clamp(42rem, 60vw, 58rem);
-    margin-top: clamp(3rem, 7vw, 7rem);
-  }
-
-  .home-device-layer {
-    position: absolute;
-  }
-
-  .home-device-layer > div {
-    transform: translate3d(0, var(--scroll-shift, 0), 0);
-    transition: transform 0.12s linear;
-    will-change: transform;
-  }
-
-  .home-device-layer--desktop {
-    z-index: 1;
-    top: 3%;
-    left: 0;
-    width: 82%;
-  }
-
-  .home-device-layer--tablet {
-    z-index: 2;
-    top: 20%;
-    right: 0;
-    width: 42%;
-    transition-delay: 100ms;
-  }
-
-  .home-device-layer--phone {
-    z-index: 3;
-    right: 20%;
-    bottom: 0;
-    width: min(15rem, 19%);
-    transition-delay: 190ms;
-  }
-
-  .home-device-layer--desktop .website-frame__screen > .project-visual {
-    min-height: clamp(28rem, 39vw, 38rem);
-  }
-
-  .home-device-layer--tablet .website-frame__screen > .project-visual {
-    min-height: clamp(27rem, 37vw, 35rem);
-  }
-
-  .home-device-layer--phone .website-frame__screen > .project-visual {
-    min-height: clamp(24rem, 32vw, 30rem);
-  }
-
-  .home-device-caption {
-    max-width: 30rem;
-    margin-left: auto;
-    color: rgb(242 240 232 / 48%);
-    font-size: 0.68rem;
-    letter-spacing: 0.09em;
-    text-align: right;
-    text-transform: uppercase;
-  }
-
   .home-process-story {
     padding-block: clamp(7rem, 11vw, 12rem);
   }
@@ -6588,14 +6483,6 @@
       margin-top: -4.5rem;
     }
 
-    .home-device-heading {
-      grid-template-columns: minmax(8rem, 0.35fr) minmax(0, 1.65fr);
-    }
-
-    .home-device-heading p {
-      grid-column: 2;
-    }
-
     .home-growth-copy {
       width: 88%;
     }
@@ -6661,31 +6548,6 @@
 
     .home-benefit-flow article + article {
       margin-top: -2rem;
-    }
-
-    .home-device-heading {
-      grid-template-columns: minmax(8rem, 0.35fr) minmax(0, 1.65fr);
-    }
-
-    .home-device-heading p {
-      grid-column: 2;
-    }
-
-    .home-device-composition {
-      min-height: 48rem;
-    }
-
-    .home-device-layer--desktop {
-      width: 90%;
-    }
-
-    .home-device-layer--tablet {
-      width: 48%;
-    }
-
-    .home-device-layer--phone {
-      right: 18%;
-      width: 22%;
     }
 
     .home-process-path {
@@ -6859,18 +6721,12 @@
       display: none;
     }
 
-    .home-editorial-heading,
-    .home-device-heading {
+    .home-editorial-heading {
       grid-template-columns: 1fr;
       gap: var(--space-md);
     }
 
-    .home-device-heading p {
-      grid-column: auto;
-    }
-
-    .home-editorial-heading h2,
-    .home-device-heading h2 {
+    .home-editorial-heading h2 {
       font-size: clamp(3.5rem, 15vw, 5.4rem);
     }
 
@@ -6985,49 +6841,6 @@
       bottom: -3%;
     }
 
-    .home-device-experience {
-      padding-block: 6rem;
-    }
-
-    .home-device-composition {
-      min-height: 39rem;
-      margin-top: 4rem;
-    }
-
-    .home-device-layer--desktop {
-      top: 0;
-      left: -9%;
-      width: 112%;
-    }
-
-    .home-device-layer--tablet {
-      top: 29%;
-      right: -12%;
-      width: 72%;
-    }
-
-    .home-device-layer--phone {
-      right: 13%;
-      width: 32%;
-    }
-
-    .home-device-layer--desktop .website-frame__screen > .project-visual {
-      min-height: 21rem;
-    }
-
-    .home-device-layer--tablet .website-frame__screen > .project-visual {
-      min-height: 24rem;
-    }
-
-    .home-device-layer--phone .website-frame__screen > .project-visual {
-      min-height: 22rem;
-    }
-
-    .home-device-caption {
-      margin-top: 1rem;
-      text-align: left;
-    }
-
     .home-process-story {
       padding-block: 7rem;
     }
@@ -7064,8 +6877,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   @layer pages {
-    [data-scroll-shift],
-    .home-device-layer > div {
+    [data-scroll-shift] {
       transform: none !important;
       transition: none !important;
     }
@@ -7154,7 +6966,6 @@
       transform: rotate(-1.1deg);
     }
 
-    .home-device-layer,
     .home-process-path {
       transition-delay: 0s !important;
     }
