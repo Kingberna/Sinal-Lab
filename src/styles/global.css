@@ -339,9 +339,9 @@
     right: 1rem;
     left: 1rem;
     display: grid;
-    grid-template-columns: 0.75fr 1.7fr;
-    gap: var(--space-lg);
-    padding: var(--space-lg);
+    grid-template-columns: minmax(16rem, 0.7fr) minmax(0, 2fr);
+    gap: clamp(1.5rem, 3vw, 3.5rem);
+    padding: clamp(1.5rem, 3vw, 3rem);
     color: var(--paper);
     border-radius: var(--radius-lg);
     background: var(--ink);
@@ -355,16 +355,28 @@
     align-items: flex-start;
     flex-direction: column;
     justify-content: space-between;
-    padding-right: var(--space-md);
+    padding-right: clamp(1.5rem, 2.5vw, 2.5rem);
     border-right: 1px solid var(--line-light);
   }
 
-  .mega-intro p {
-    max-width: 22rem;
-    margin-block: 1.5rem auto;
+  .mega-intro-copy {
+    max-width: 24rem;
+    margin-block: 1.25rem 2rem;
+  }
+
+  .mega-intro h2 {
     font-family: var(--font-serif);
-    font-size: var(--step-2);
+    font-size: clamp(1.75rem, 2.3vw, 2.65rem);
+    font-weight: 400;
     line-height: 1.1;
+    letter-spacing: -0.04em;
+  }
+
+  .mega-intro p {
+    max-width: 21rem;
+    margin-top: 1rem;
+    color: rgb(242 240 232 / 66%);
+    font-size: 0.9rem;
   }
 
   .text-link {
@@ -390,39 +402,69 @@
 
   .mega-services {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
   }
 
   .mega-services a {
     display: grid;
+    min-width: 0;
+    min-height: 14rem;
     grid-template-columns: auto 1fr auto;
-    gap: 1rem;
-    align-items: center;
-    min-height: 5rem;
-    padding: 1rem;
-    border-bottom: 1px solid var(--line-light);
-    transition: color 0.25s, background 0.25s;
-  }
-
-  .mega-services a:nth-child(odd) {
-    border-right: 1px solid var(--line-light);
+    grid-template-areas:
+      "number . arrow"
+      "title title title"
+      "description description description";
+    grid-template-rows: auto auto 1fr;
+    padding: clamp(1rem, 1.6vw, 1.5rem);
+    border: 1px solid var(--line-light);
+    border-radius: 0.75rem;
+    background: rgb(242 240 232 / 2%);
+    transition:
+      border-color 0.3s,
+      background 0.3s,
+      transform 0.3s var(--ease);
   }
 
   .mega-services a:hover {
-    color: var(--ink);
-    background: var(--lime);
+    border-color: rgb(242 240 232 / 34%);
+    background: rgb(242 240 232 / 7%);
+    transform: translateY(-0.2rem);
   }
 
   .mega-services span {
+    grid-area: number;
+    color: var(--signal);
     font-size: 0.68rem;
+    font-weight: 700;
   }
 
   .mega-services strong {
-    font-size: 1.05rem;
+    grid-area: title;
+    margin-top: clamp(1.5rem, 2vw, 2rem);
+    font-size: clamp(1.25rem, 1.65vw, 1.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+  }
+
+  .mega-services p {
+    grid-area: description;
+    align-self: end;
+    margin-top: 1rem;
+    color: rgb(242 240 232 / 64%);
+    font-size: clamp(0.78rem, 0.85vw, 0.9rem);
+    line-height: 1.45;
   }
 
   .mega-services i {
+    grid-area: arrow;
+    justify-self: end;
     font-style: normal;
+    transition: transform 0.3s var(--ease);
+  }
+
+  .mega-services a:hover i {
+    transform: translate(0.2rem, -0.2rem);
   }
 
   .header-cta {
@@ -3855,7 +3897,8 @@
     border-top: 1px solid var(--line-light);
   }
 
-  .mobile-menu > nav a {
+  .mobile-menu > nav > a,
+  .mobile-services > summary {
     display: grid;
     grid-template-columns: 2.5rem 1fr auto;
     gap: 1rem;
@@ -3868,19 +3911,111 @@
     letter-spacing: -0.05em;
   }
 
-  .mobile-menu > nav a > span {
+  .mobile-services > summary {
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .mobile-services > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .mobile-menu > nav > a > span,
+  .mobile-services > summary > span {
     color: var(--signal);
     font-size: 0.65rem;
     letter-spacing: 0;
   }
 
-  .mobile-menu > nav a > i {
+  .mobile-menu > nav > a > i,
+  .mobile-services > summary > i {
     font-size: 1rem;
+    font-style: normal;
+    transition: transform 0.3s var(--ease);
+  }
+
+  .mobile-services[open] > summary > i {
+    transform: rotate(45deg);
+  }
+
+  .mobile-menu > nav > a[aria-current="page"] {
+    color: var(--lime);
+  }
+
+  .mobile-service-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.65rem;
+    padding-block: 0.75rem 1rem;
+    border-bottom: 1px solid var(--line-light);
+  }
+
+  .mobile-service-list > a:not(.mobile-services-all) {
+    position: relative;
+    display: grid;
+    min-width: 0;
+    min-height: 10.5rem;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "number arrow"
+      "title title"
+      "description description";
+    grid-template-rows: auto auto 1fr;
+    padding: 1rem;
+    border: 1px solid var(--line-light);
+    border-radius: 0.75rem;
+    background: rgb(242 240 232 / 3%);
+  }
+
+  .mobile-service-list > a:not(.mobile-services-all) > span {
+    grid-area: number;
+    color: var(--signal);
+    font-size: 0.65rem;
+    font-weight: 700;
+  }
+
+  .mobile-service-list > a:not(.mobile-services-all) > strong {
+    grid-area: title;
+    margin-top: 1rem;
+    font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+  }
+
+  .mobile-service-list > a:not(.mobile-services-all) > p {
+    grid-area: description;
+    align-self: end;
+    margin-top: 0.75rem;
+    color: rgb(242 240 232 / 64%);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    letter-spacing: 0;
+  }
+
+  .mobile-service-list > a:not(.mobile-services-all) > i {
+    grid-area: arrow;
+    font-size: 0.85rem;
     font-style: normal;
   }
 
-  .mobile-menu > nav a[aria-current="page"] {
-    color: var(--lime);
+  .mobile-service-list > a[aria-current="page"] {
+    border-color: var(--lime);
+  }
+
+  .mobile-services-all {
+    display: inline-flex;
+    grid-column: 1 / -1;
+    gap: 0.6rem;
+    align-items: center;
+    justify-self: start;
+    padding-block: 0.25rem;
+    border-bottom: 1px solid currentColor;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .mobile-services-all i {
+    font-style: normal;
   }
 
   .mobile-menu-bottom {
@@ -4244,6 +4379,18 @@
 
   .mobile-menu {
     padding: 1rem;
+  }
+
+  .mobile-menu > nav {
+    margin-block: 3rem 2rem;
+  }
+
+  .mobile-service-list {
+    grid-template-columns: 1fr;
+  }
+
+  .mobile-service-list > a:not(.mobile-services-all) {
+    min-height: 10rem;
   }
 
   .mobile-menu-bottom {
