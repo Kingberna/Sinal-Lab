@@ -61,6 +61,7 @@
     --ink: #111318;
     --ink-soft: #24262c;
     --paper: #f2f0e8;
+    --paper-depth: #f1efe7;
     --paper-bright: #fbfaf5;
     --signal: #ff5838;
     --signal-dark: #d83920;
@@ -5517,7 +5518,51 @@
   }
 
   .home-benefits {
-    padding-block: clamp(6rem, 10vw, 11rem);
+    position: relative;
+    padding-block: clamp(6rem, 9vw, 10rem);
+    isolation: isolate;
+    scroll-margin-top: calc(var(--header-height) + 2rem);
+  }
+
+  .home-benefits::before,
+  .home-benefits::after {
+    position: absolute;
+    left: 50%;
+    width: 100vw;
+    pointer-events: none;
+    content: '';
+    transform: translateX(-50%);
+  }
+
+  .home-benefits::before {
+    z-index: -2;
+    inset-block: 0;
+    background:
+      radial-gradient(circle at 15% 27%, rgb(154 132 255 / 7%), transparent 26%),
+      radial-gradient(circle at 85% 45%, rgb(201 255 85 / 5.5%), transparent 24%),
+      radial-gradient(circle at 17% 64%, rgb(83 104 255 / 6%), transparent 27%),
+      radial-gradient(circle at 85% 82%, rgb(255 88 56 / 5.5%), transparent 25%),
+      linear-gradient(
+        to bottom,
+        var(--paper) 0,
+        var(--paper-depth) clamp(5rem, 8vw, 8rem),
+        var(--paper-depth) calc(100% - clamp(5rem, 8vw, 8rem)),
+        var(--paper) 100%
+      );
+  }
+
+  .home-benefits::after {
+    z-index: -1;
+    inset-block: clamp(4rem, 7vw, 7rem);
+    opacity: 0.022;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.8'/%3E%3C/svg%3E");
+    background-size: 12rem 12rem;
+    mix-blend-mode: multiply;
+  }
+
+  .home-benefits > * {
+    position: relative;
+    z-index: 1;
   }
 
   .home-editorial-heading {
@@ -5525,7 +5570,7 @@
     grid-template-columns: minmax(10rem, 0.42fr) minmax(0, 1.58fr);
     gap: var(--space-lg);
     align-items: start;
-    margin-bottom: clamp(3rem, 7vw, 7rem);
+    margin-bottom: clamp(3rem, 6vw, 6rem);
   }
 
   .home-editorial-heading h2 {
@@ -5561,11 +5606,15 @@
     grid-template-columns: minmax(13rem, 0.72fr) minmax(18rem, 1.28fr);
     gap: clamp(2rem, 6vw, 7rem);
     align-items: center;
-    padding-block: clamp(2rem, 5vw, 5rem);
+    padding-block: clamp(1.75rem, 4.25vw, 4.25rem);
   }
 
   .home-benefit-flow article + article {
     margin-top: clamp(-2rem, -2vw, -0.75rem);
+  }
+
+  .home-benefit-flow article:nth-child(4) {
+    margin-top: clamp(-3rem, -3vw, -1.5rem);
   }
 
   .home-benefit-flow article.home-benefit--right {
@@ -6454,6 +6503,21 @@
 
 @media (max-width: 72rem) {
   @layer pages {
+    .home-benefits::before {
+      background:
+        radial-gradient(circle at 13% 27%, rgb(154 132 255 / 6.5%), transparent 25%),
+        radial-gradient(circle at 87% 45%, rgb(201 255 85 / 5%), transparent 23%),
+        radial-gradient(circle at 14% 64%, rgb(83 104 255 / 5.5%), transparent 25%),
+        radial-gradient(circle at 87% 82%, rgb(255 88 56 / 5%), transparent 24%),
+        linear-gradient(
+          to bottom,
+          var(--paper) 0,
+          var(--paper-depth) clamp(5rem, 8vw, 8rem),
+          var(--paper-depth) calc(100% - clamp(5rem, 8vw, 8rem)),
+          var(--paper) 100%
+        );
+    }
+
     .home-essential-hero h1 {
       max-width: 62rem;
       font-size: clamp(4.6rem, 9.6vw, 7.25rem);
@@ -6618,6 +6682,29 @@
 
 @media (max-width: 44rem) {
   @layer pages {
+    .home-benefits {
+      padding-block: 5.5rem;
+    }
+
+    .home-benefits::before {
+      background:
+        radial-gradient(circle at 50% 25%, rgb(154 132 255 / 6.5%), transparent 21%),
+        radial-gradient(circle at 50% 44%, rgb(201 255 85 / 5%), transparent 20%),
+        radial-gradient(circle at 50% 64%, rgb(83 104 255 / 5.5%), transparent 21%),
+        radial-gradient(circle at 50% 83%, rgb(255 88 56 / 5%), transparent 20%),
+        linear-gradient(
+          to bottom,
+          var(--paper) 0,
+          var(--paper-depth) 6rem,
+          var(--paper-depth) calc(100% - 6rem),
+          var(--paper) 100%
+        );
+    }
+
+    .home-benefits::after {
+      inset-block: 4rem;
+    }
+
     .home-essential-hero {
       min-height: 50rem;
       padding-inline: 1rem;
@@ -6768,7 +6855,7 @@
       min-height: 0;
       grid-template-columns: 1fr;
       gap: var(--space-md);
-      padding-block: 3.5rem;
+      padding-block: 3rem;
       margin: 0;
     }
 
