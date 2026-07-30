@@ -4917,15 +4917,15 @@
     height: clamp(5rem, 7vw, 7rem);
     background:
       radial-gradient(
-        ellipse 90% 82% at 47% 118%,
+        ellipse 92% 70% at 47% 142%,
         rgb(242 240 232 / 96%) 0 52%,
-        rgb(242 240 232 / 0%) 86%
+        rgb(242 240 232 / 0%) 92%
       ),
       linear-gradient(
         to bottom,
-        rgb(242 240 232 / 0%) 0%,
-        rgb(242 240 232 / 6%) 32%,
-        rgb(242 240 232 / 38%) 70%,
+        rgb(242 240 232 / 0%) 0 54%,
+        rgb(242 240 232 / 4%) 64%,
+        rgb(242 240 232 / 34%) 84%,
         var(--paper) 100%
       );
     content: '';
