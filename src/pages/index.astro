@@ -107,6 +107,15 @@ const processSteps = [
     </header>
 
     <div class="home-benefit-flow">
+      <svg
+        class="home-benefit-signal-path"
+        viewBox="0 0 100 1000"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path d="M50 0 C15 90 15 160 50 250 S85 410 50 500 S15 660 50 750 S85 910 50 1000"></path>
+      </svg>
       {
         benefits.map((benefit, index) => (
           <article class:list={[`home-benefit--${benefit.visual}`, index % 2 === 1 && 'home-benefit--right']} data-reveal>
