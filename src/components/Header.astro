@@ -10,7 +10,7 @@ const { currentPath } = Astro.props;
 const isCurrent = (href: string) => (href === '/' ? currentPath === href : currentPath.startsWith(href));
 ---
 
-<header class="site-header" data-header>
+<header class:list={['site-header', currentPath === '/' && 'site-header--home']} data-header>
   <a class="brand" href="/" aria-label={`${siteConfig.name}, página inicial`}>
     <span class="brand-mark" aria-hidden="true"><i></i></span>
     <span>SINAL</span>
