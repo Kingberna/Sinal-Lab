@@ -8,6 +8,7 @@ interface Props {
 
 const { currentPath } = Astro.props;
 const isCurrent = (href: string) => (href === '/' ? currentPath === href : currentPath.startsWith(href));
+const headerNavigation = siteConfig.navigation.filter((item) => item.href !== '/sobre');
 ---
 
 <header class:list={['site-header', currentPath === '/' && 'site-header--home']} data-header>
@@ -40,7 +41,7 @@ const isCurrent = (href: string) => (href === '/' ? currentPath === href : curre
         </div>
       </div>
     </details>
-    {siteConfig.navigation.slice(1).map((item) => (
+    {headerNavigation.slice(1).map((item) => (
       <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
     ))}
   </nav>
@@ -67,7 +68,7 @@ const isCurrent = (href: string) => (href === '/' ? currentPath === href : curre
     </div>
     <nav aria-label="Navegação mobile">
       {
-        siteConfig.navigation.map((item, index) =>
+        headerNavigation.map((item, index) =>
           item.href === '/servicos' ? (
             <details class="mobile-services" data-mobile-services>
               <summary>
