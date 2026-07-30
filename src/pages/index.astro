@@ -118,10 +118,43 @@ const processSteps = [
       {
         benefits.map((benefit, index) => (
           <article class:list={[`home-benefit--${benefit.visual}`, index % 2 === 1 && 'home-benefit--right']} data-reveal>
-            <div class="home-benefit-visual" aria-hidden="true">
-              <i></i><i></i><i></i>
-              <span></span>
-            </div>
+            {
+              benefit.visual === 'clarity' ? (
+                <div class="home-benefit-video-composition" data-video-observer-root>
+                  <i
+                    class="home-benefit-video-ring home-benefit-video-ring--outer"
+                    data-scroll-shift="-4"
+                    aria-hidden="true"
+                  ></i>
+                  <i
+                    class="home-benefit-video-ring home-benefit-video-ring--inner"
+                    data-scroll-shift="5"
+                    aria-hidden="true"
+                  ></i>
+                  <div class="home-benefit-video-shell">
+                    <video
+                      class="home-benefit-video"
+                      autoplay
+                      muted
+                      loop
+                      playsinline
+                      preload="metadata"
+                      disablepictureinpicture
+                      aria-label="Pessoa a observar um website no computador"
+                      data-viewport-video
+                    >
+                      <source src="/videos/percebe-se-rapidamente.mp4" type="video/mp4" />
+                    </video>
+                  </div>
+                  <span class="home-benefit-video-signal" aria-hidden="true"></span>
+                </div>
+              ) : (
+                <div class="home-benefit-visual" aria-hidden="true">
+                  <i></i><i></i><i></i>
+                  <span></span>
+                </div>
+              )
+            }
             <div>
               <h3>{benefit.title}</h3>
               <p>{benefit.text}</p>
@@ -229,7 +262,11 @@ const processSteps = [
       const videoObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            const videos = entry.target.querySelectorAll<HTMLVideoElement>('[data-viewport-video]');
+            const target = entry.target as HTMLElement;
+            const videos = target.matches('[data-viewport-video]')
+              ? [target as HTMLVideoElement]
+              : Array.from(target.querySelectorAll<HTMLVideoElement>('[data-viewport-video]'));
+
             videos.forEach((video) => {
               if (entry.isIntersecting) void video.play().catch(() => undefined);
               else video.pause();
@@ -240,7 +277,7 @@ const processSteps = [
       );
 
       viewportVideos.forEach((video) => {
-        videoObserver.observe(video.closest('.home-product-stage') ?? video);
+        videoObserver.observe(video.closest('[data-video-observer-root], .home-product-stage') ?? video);
       });
     }
   </script>
