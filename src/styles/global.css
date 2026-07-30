@@ -4752,6 +4752,7 @@
     position: relative;
     display: flex;
     min-height: 100svh;
+    margin-bottom: -1px;
     overflow: hidden;
     flex-direction: column;
     justify-content: center;
@@ -4992,7 +4993,46 @@
   }
 
   .home-outcomes {
+    --home-transition-depth: clamp(9rem, 15vw, 14rem);
+
+    position: relative;
+    z-index: 0;
     padding-block: var(--space-2xl);
+    isolation: isolate;
+  }
+
+  .home-outcomes::before {
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    width: 100vw;
+    background:
+      radial-gradient(
+          ellipse 48% 82% at 18% 0%,
+          rgb(255 88 56 / 12%),
+          transparent 72%
+        )
+        top center / 100% var(--home-transition-depth) no-repeat,
+      radial-gradient(
+          ellipse 54% 92% at 82% 0%,
+          rgb(83 104 255 / 14%),
+          transparent 74%
+        )
+        top center / 100% var(--home-transition-depth) no-repeat,
+      linear-gradient(
+          to bottom,
+          var(--ink) 0%,
+          color-mix(in srgb, var(--ink) 82%, var(--paper)) 20%,
+          color-mix(in srgb, var(--ink) 48%, var(--paper)) 48%,
+          color-mix(in srgb, var(--ink) 14%, var(--paper)) 76%,
+          var(--paper) 100%
+        )
+        top center / 100% var(--home-transition-depth) no-repeat,
+      var(--paper);
+    content: '';
+    pointer-events: none;
+    inset-block: 0;
+    transform: translateX(-50%);
   }
 
   .home-section-heading {
@@ -5015,6 +5055,7 @@
 
   .home-outcome-grid {
     display: grid;
+    grid-auto-rows: 1fr;
     grid-template-columns: 1fr 1fr;
     border-top: 1px solid var(--ink);
     border-left: 1px solid var(--ink);
@@ -5025,13 +5066,33 @@
     border-bottom: 1px solid var(--ink);
   }
 
+  .home-outcome-grid article[data-reveal] {
+    transform: translateY(1.1rem);
+    transition:
+      opacity 0.52s var(--ease),
+      transform 0.52s var(--ease);
+  }
+
+  .home-outcome-grid article[data-reveal].is-visible {
+    transform: none;
+  }
+
+  .home-outcome-grid article:nth-child(2)[data-reveal] { transition-delay: 70ms; }
+  .home-outcome-grid article:nth-child(3)[data-reveal] { transition-delay: 140ms; }
+  .home-outcome-grid article:nth-child(4)[data-reveal] { transition-delay: 210ms; }
+
   .home-outcome-grid a {
     position: relative;
     display: grid;
-    min-height: clamp(18rem, 27vw, 25rem);
+    height: 100%;
+    min-height: clamp(14rem, 19vw, 18rem);
     grid-template-columns: 1fr auto;
-    grid-template-rows: auto 1fr auto;
-    padding: var(--space-md);
+    grid-template-areas:
+      "number arrow"
+      "title title"
+      "text text";
+    grid-template-rows: auto auto 1fr;
+    padding: clamp(1.25rem, 2.2vw, 2rem);
     transition:
       color 0.35s,
       background 0.35s,
@@ -5044,12 +5105,14 @@
   .home-outcome-grid article:nth-child(4) a:hover { background: var(--signal); }
 
   .home-outcome-grid a > span {
+    grid-area: number;
     font-size: 0.7rem;
     font-weight: 700;
   }
 
   .home-outcome-grid a > i {
     display: grid;
+    grid-area: arrow;
     width: 2.4rem;
     height: 2.4rem;
     border: 1px solid currentColor;
@@ -5064,12 +5127,14 @@
   }
 
   .home-outcome-grid h3 {
-    grid-column: 1 / -1;
-    align-self: end;
+    grid-area: title;
+    margin-top: clamp(1.5rem, 2.4vw, 2.5rem);
     font-size: var(--step-3);
   }
 
   .home-outcome-grid p {
+    grid-area: text;
+    align-self: end;
     max-width: 31rem;
     margin-top: 1rem;
     color: var(--muted);
@@ -5174,6 +5239,10 @@
       grid-template-columns: 1fr;
     }
 
+    .home-outcome-grid a {
+      min-height: 14.25rem;
+    }
+
     .home-project-grid .project-card:nth-child(2) {
       margin-top: 0;
     }
@@ -5230,7 +5299,8 @@
     }
 
     .home-outcome-grid a {
-      min-height: 18rem;
+      min-height: 13.75rem;
+      padding: var(--space-sm);
     }
 
     .home-outcomes-footer {
@@ -5249,6 +5319,14 @@
   @layer pages {
     .home-essential-hero h1 {
       font-size: 3.25rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @layer pages {
+    .home-outcome-grid article[data-reveal] {
+      transition-delay: 0s !important;
     }
   }
 }
