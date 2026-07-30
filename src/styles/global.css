@@ -5765,6 +5765,208 @@
     background: var(--signal);
   }
 
+  .home-benefit--screens[data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .home-benefit--screens > div:last-child {
+    opacity: 0;
+    transform: translateY(0.75rem);
+    transition:
+      opacity 0.6s var(--ease),
+      transform 0.6s var(--ease);
+  }
+
+  .home-benefit--screens.is-visible > div:last-child {
+    opacity: 1;
+    transform: none;
+  }
+
+  .home-benefit-device-composition {
+    position: relative;
+    order: 2;
+    width: min(100%, 23rem);
+    margin-inline: auto;
+    isolation: isolate;
+    aspect-ratio: 4 / 3;
+  }
+
+  .home-benefit-device-halo {
+    position: absolute;
+    z-index: 0;
+    right: -2%;
+    bottom: -5%;
+    width: 78%;
+    border-radius: 50%;
+    opacity: 0.96;
+    aspect-ratio: 1;
+    background: var(--lime);
+    transform: scale(0.96);
+    transition: transform 0.65s var(--ease);
+  }
+
+  .home-benefit-device-waves {
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+    inset: -10%;
+  }
+
+  .home-benefit-device-waves i {
+    position: absolute;
+    top: 48%;
+    left: 48%;
+    border: 1px solid rgb(17 19 24 / 24%);
+    border-radius: 50%;
+    opacity: 0;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%) scale(0.98);
+    transition:
+      opacity 0.55s var(--ease),
+      transform 0.65s var(--ease);
+  }
+
+  .home-benefit-device-waves i:first-child { width: 68%; }
+  .home-benefit-device-waves i:nth-child(2) { width: 92%; }
+  .home-benefit-device-waves i:nth-child(3) { width: 116%; }
+
+  .home-benefit-device-monitor {
+    position: absolute;
+    z-index: 2;
+    top: 10%;
+    left: 0;
+    display: grid;
+    width: 91%;
+    overflow: hidden;
+    border: 1px solid rgb(17 19 24 / 24%);
+    border-radius: clamp(1.6rem, 3vw, 2.6rem);
+    opacity: 0;
+    aspect-ratio: 16 / 10;
+    grid-template-rows: 10% 1fr;
+    background: var(--paper-bright);
+    box-shadow: 0 1.4rem 3.5rem rgb(17 19 24 / 13%);
+    transform: translateY(1rem);
+    transition:
+      opacity 0.62s var(--ease),
+      transform 0.62s var(--ease);
+  }
+
+  .home-benefit-device-bar {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 0.24rem;
+    align-items: center;
+    padding-inline: 0.75rem;
+    border-bottom: 1px solid rgb(17 19 24 / 18%);
+    background: var(--paper);
+  }
+
+  .home-benefit-device-bar i {
+    width: 0.32rem;
+    border-radius: 50%;
+    aspect-ratio: 1;
+    background: rgb(17 19 24 / 34%);
+  }
+
+  .home-benefit-device-bar i:first-child {
+    background: var(--signal);
+  }
+
+  .home-benefit-device-screen {
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background: var(--ink);
+  }
+
+  .home-benefit-device-video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .home-benefit-device-phone {
+    position: absolute;
+    z-index: 3;
+    right: 0;
+    bottom: 2%;
+    width: 27%;
+    overflow: hidden;
+    border: 0.26rem solid var(--ink);
+    border-radius: clamp(1rem, 2vw, 1.4rem);
+    opacity: 0;
+    aspect-ratio: 9 / 17;
+    background: var(--ink);
+    box-shadow: 0 1rem 2.2rem rgb(17 19 24 / 20%);
+    transform: translate3d(0.65rem, 0.35rem, 0) rotate(1.5deg);
+    transition:
+      opacity 0.55s var(--ease) 110ms,
+      transform 0.58s var(--ease) 110ms;
+  }
+
+  .home-benefit-device-phone > span {
+    position: absolute;
+    z-index: 2;
+    top: 0.28rem;
+    left: 50%;
+    width: 38%;
+    height: 0.28rem;
+    border-radius: 1rem;
+    background: var(--ink);
+    transform: translateX(-50%);
+  }
+
+  .home-benefit-device-phone .home-benefit-device-video {
+    object-position: center;
+  }
+
+  .home-benefit-device-signal {
+    position: absolute;
+    z-index: 4;
+    right: -0.45rem;
+    bottom: 20%;
+    width: clamp(0.9rem, 1.8vw, 1.25rem);
+    border: 0.25rem solid var(--paper);
+    border-radius: 50%;
+    opacity: 0;
+    aspect-ratio: 1;
+    background: var(--signal);
+    box-shadow: 0 0 0 1px rgb(17 19 24 / 20%);
+    transform: scale(0.75);
+    transition:
+      opacity 0.45s var(--ease) 180ms,
+      transform 0.45s var(--ease) 180ms;
+  }
+
+  .home-benefit--screens.is-visible .home-benefit-device-halo {
+    transform: scale(1);
+  }
+
+  .home-benefit--screens.is-visible .home-benefit-device-waves i {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .home-benefit--screens.is-visible .home-benefit-device-monitor {
+    opacity: 1;
+    transform: none;
+  }
+
+  .home-benefit--screens.is-visible .home-benefit-device-phone {
+    opacity: 1;
+    transform: rotate(1.5deg);
+  }
+
+  .home-benefit--screens.is-visible .home-benefit-device-signal {
+    opacity: 1;
+    transform: scale(1);
+  }
+
   .home-benefit--search .home-benefit-visual {
     background: var(--cobalt);
   }
@@ -6411,6 +6613,7 @@
     }
 
     .home-benefit--right .home-benefit-visual,
+    .home-benefit--right .home-benefit-device-composition,
     .home-benefit--right > div:last-child {
       order: initial;
     }
@@ -6443,6 +6646,24 @@
 
     .home-benefit--clarity p {
       margin-inline: auto;
+    }
+
+    .home-benefit-device-composition {
+      width: min(100%, 22rem);
+      margin-inline: auto;
+    }
+
+    .home-benefit--screens > div:last-child {
+      text-align: center;
+    }
+
+    .home-benefit--screens p {
+      margin-inline: auto;
+    }
+
+    .home-benefit-device-phone {
+      right: 1%;
+      width: 24%;
     }
 
     .home-device-experience {
@@ -6534,6 +6755,41 @@
     .home-benefit--clarity > div:last-child {
       opacity: 1;
       transition: none !important;
+    }
+
+    .home-benefit-device-halo,
+    .home-benefit-device-waves i,
+    .home-benefit-device-monitor,
+    .home-benefit-device-phone,
+    .home-benefit-device-signal,
+    .home-benefit--screens > div:last-child {
+      opacity: 1;
+      transition: none !important;
+    }
+
+    .home-benefit-device-halo,
+    .home-benefit--screens.is-visible .home-benefit-device-halo {
+      transform: scale(1);
+    }
+
+    .home-benefit-device-waves i,
+    .home-benefit--screens.is-visible .home-benefit-device-waves i {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .home-benefit-device-monitor,
+    .home-benefit--screens.is-visible .home-benefit-device-monitor {
+      transform: none;
+    }
+
+    .home-benefit-device-phone,
+    .home-benefit--screens.is-visible .home-benefit-device-phone {
+      transform: rotate(1.5deg);
+    }
+
+    .home-benefit-device-signal,
+    .home-benefit--screens.is-visible .home-benefit-device-signal {
+      transform: scale(1);
     }
 
     .home-benefit-video-composition,

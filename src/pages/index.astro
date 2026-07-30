@@ -148,6 +148,49 @@ const processSteps = [
                   </div>
                   <span class="home-benefit-video-signal" aria-hidden="true"></span>
                 </div>
+              ) : benefit.visual === 'screens' ? (
+                <div class="home-benefit-device-composition" data-video-observer-root>
+                  <span class="home-benefit-device-halo" aria-hidden="true"></span>
+                  <div class="home-benefit-device-waves" aria-hidden="true">
+                    <i></i><i></i><i></i>
+                  </div>
+                  <div class="home-benefit-device-monitor">
+                    <div class="home-benefit-device-bar" aria-hidden="true">
+                      <i></i><i></i><i></i>
+                    </div>
+                    <div class="home-benefit-device-screen">
+                      <video
+                        class="home-benefit-device-video"
+                        autoplay
+                        muted
+                        loop
+                        playsinline
+                        preload="metadata"
+                        disablepictureinpicture
+                        aria-label="Website a ser testado em diferentes dispositivos"
+                        data-viewport-video
+                      >
+                        <source src="/videos/qualquer-ecra.mp4" type="video/mp4" />
+                      </video>
+                    </div>
+                  </div>
+                  <div class="home-benefit-device-phone" aria-hidden="true">
+                    <span></span>
+                    <video
+                      class="home-benefit-device-video"
+                      autoplay
+                      muted
+                      loop
+                      playsinline
+                      preload="metadata"
+                      disablepictureinpicture
+                      data-viewport-video
+                    >
+                      <source src="/videos/qualquer-ecra.mp4" type="video/mp4" />
+                    </video>
+                  </div>
+                  <span class="home-benefit-device-signal" aria-hidden="true"></span>
+                </div>
               ) : (
                 <div class="home-benefit-visual" aria-hidden="true">
                   <i></i><i></i><i></i>
