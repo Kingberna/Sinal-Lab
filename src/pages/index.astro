@@ -176,6 +176,33 @@ const processSteps = [
                   </div>
                   <span class="home-benefit-device-signal" aria-hidden="true"></span>
                 </div>
+              ) : benefit.visual === 'search' ? (
+                <div class="home-benefit-search-composition" data-video-observer-root>
+                  <span class="home-benefit-search-halo" aria-hidden="true"></span>
+                  <div class="home-benefit-search-rings" aria-hidden="true">
+                    <i></i><i></i><i></i>
+                  </div>
+                  <div class="home-benefit-search-video-shell">
+                    <video
+                      class="home-benefit-search-video"
+                      autoplay
+                      muted
+                      loop
+                      playsinline
+                      preload="metadata"
+                      disablepictureinpicture
+                      aria-label="Pessoa a pesquisar e encontrar um negócio na internet"
+                      data-viewport-video
+                    >
+                      <source src="/videos/mais-facil-encontrar.mp4" type="video/mp4" />
+                    </video>
+                  </div>
+                  <div class="home-benefit-search-bar" aria-hidden="true">
+                    <i></i>
+                    <span></span>
+                    <b></b>
+                  </div>
+                </div>
               ) : (
                 <div class="home-benefit-visual" aria-hidden="true">
                   <i></i><i></i><i></i>

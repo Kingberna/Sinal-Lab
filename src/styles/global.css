@@ -5927,41 +5927,161 @@
     transform: scale(1);
   }
 
-  .home-benefit--search .home-benefit-visual {
-    background: var(--cobalt);
+  .home-benefit--search[data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 
-  .home-benefit--search .home-benefit-visual i {
+  .home-benefit--search > div:last-child {
+    opacity: 0;
+    transform: translateY(0.75rem);
+    transition:
+      opacity 0.6s var(--ease),
+      transform 0.6s var(--ease);
+  }
+
+  .home-benefit--search.is-visible > div:last-child {
+    opacity: 1;
+    transform: none;
+  }
+
+  .home-benefit-search-composition {
+    position: relative;
+    width: min(100%, 23rem);
+    margin-inline: auto;
+    isolation: isolate;
+    aspect-ratio: 4 / 3;
+  }
+
+  .home-benefit-search-halo {
     position: absolute;
-    border: 1px solid rgb(242 240 232 / 72%);
+    z-index: 0;
+    bottom: -16%;
+    left: -12%;
+    width: 88%;
     border-radius: 50%;
-    inset: calc(11% + var(--i, 0) * 14%);
+    opacity: 0.96;
+    aspect-ratio: 1;
+    background: var(--cobalt);
+    transform: scale(0.96);
+    transition: transform 0.65s var(--ease);
   }
 
-  .home-benefit--search .home-benefit-visual i:nth-child(2) { --i: 1; }
-  .home-benefit--search .home-benefit-visual i:nth-child(3) { --i: 2; }
-
-  .home-benefit--search .home-benefit-visual span {
+  .home-benefit-search-rings {
     position: absolute;
-    right: -8%;
-    bottom: 13%;
+    z-index: 1;
+    pointer-events: none;
+    inset: -8%;
+  }
+
+  .home-benefit-search-rings i {
+    position: absolute;
+    top: 60%;
+    left: 30%;
+    border: 1px solid rgb(242 240 232 / 68%);
+    border-radius: 50%;
+    opacity: 0;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%) scale(0.97);
+    transition:
+      opacity 0.55s var(--ease),
+      transform 0.65s var(--ease);
+  }
+
+  .home-benefit-search-rings i:first-child { width: 64%; }
+  .home-benefit-search-rings i:nth-child(2) { width: 88%; }
+  .home-benefit-search-rings i:nth-child(3) { width: 112%; }
+
+  .home-benefit-search-video-shell {
+    position: absolute;
+    z-index: 2;
+    top: 2%;
+    left: 2%;
+    width: 96%;
+    overflow: hidden;
+    border: 1px solid rgb(17 19 24 / 24%);
+    border-radius: clamp(1.6rem, 3vw, 2.6rem);
+    opacity: 0;
+    aspect-ratio: 4 / 3;
+    background: var(--ink);
+    box-shadow: 0 1.4rem 3.5rem rgb(17 19 24 / 13%);
+    transform: translateY(1rem);
+    transition:
+      opacity 0.62s var(--ease),
+      transform 0.62s var(--ease);
+  }
+
+  .home-benefit-search-video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .home-benefit-search-bar {
+    position: absolute;
+    z-index: 3;
+    right: 1%;
+    bottom: -5%;
+    display: grid;
     width: 78%;
-    height: 2.7rem;
+    height: clamp(2.5rem, 4vw, 3.1rem);
+    grid-template-columns: auto 1fr auto;
+    gap: 0.75rem;
+    align-items: center;
+    padding-inline: 1rem;
+    border: 1px solid rgb(17 19 24 / 24%);
     border-radius: 3rem;
-    background: var(--paper);
-    box-shadow: 0 0.7rem 0 var(--signal);
+    opacity: 0;
+    background: var(--paper-bright);
+    box-shadow: 0 0.9rem 2.2rem rgb(17 19 24 / 14%);
+    transform: translateY(0.55rem);
+    transition:
+      opacity 0.5s var(--ease) 110ms,
+      transform 0.5s var(--ease) 110ms;
   }
 
-  .home-benefit--search .home-benefit-visual span::before {
-    position: absolute;
-    top: 50%;
-    left: 1rem;
-    width: 0.65rem;
-    border: 2px solid var(--ink);
+  .home-benefit-search-bar i {
+    width: 0.6rem;
     border-radius: 50%;
     aspect-ratio: 1;
-    content: '';
-    transform: translateY(-50%);
+    background: var(--ink);
+  }
+
+  .home-benefit-search-bar span {
+    width: min(100%, 5.5rem);
+    height: 1px;
+    background: rgb(17 19 24 / 32%);
+  }
+
+  .home-benefit-search-bar b {
+    width: 0.8rem;
+    border-radius: 50%;
+    aspect-ratio: 1;
+    background: var(--signal);
+    transform: translateX(-0.45rem);
+    transition: transform 0.55s var(--ease) 140ms;
+  }
+
+  .home-benefit--search.is-visible .home-benefit-search-halo {
+    transform: scale(1);
+  }
+
+  .home-benefit--search.is-visible .home-benefit-search-rings i {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .home-benefit--search.is-visible .home-benefit-search-video-shell,
+  .home-benefit--search.is-visible .home-benefit-search-bar {
+    opacity: 1;
+    transform: none;
+  }
+
+  .home-benefit--search.is-visible .home-benefit-search-bar b {
+    transform: none;
   }
 
   .home-benefit--contact .home-benefit-visual {
@@ -6621,6 +6741,27 @@
       margin-inline: auto;
     }
 
+    .home-benefit-search-composition {
+      width: min(100%, 22rem);
+      margin-inline: auto;
+    }
+
+    .home-benefit-flow article.home-benefit--search {
+      gap: 3rem;
+    }
+
+    .home-benefit--search > div:last-child {
+      text-align: center;
+    }
+
+    .home-benefit--search p {
+      margin-inline: auto;
+    }
+
+    .home-benefit-search-bar {
+      bottom: -3%;
+    }
+
     .home-device-experience {
       padding-block: 6rem;
     }
@@ -6719,6 +6860,34 @@
     .home-benefit--screens > div:last-child {
       opacity: 1;
       transition: none !important;
+    }
+
+    .home-benefit-search-halo,
+    .home-benefit-search-rings i,
+    .home-benefit-search-video-shell,
+    .home-benefit-search-bar,
+    .home-benefit--search > div:last-child {
+      opacity: 1;
+      transition: none !important;
+    }
+
+    .home-benefit-search-halo,
+    .home-benefit--search.is-visible .home-benefit-search-halo {
+      transform: scale(1);
+    }
+
+    .home-benefit-search-rings i,
+    .home-benefit--search.is-visible .home-benefit-search-rings i {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .home-benefit-search-video-shell,
+    .home-benefit--search.is-visible .home-benefit-search-video-shell,
+    .home-benefit-search-bar,
+    .home-benefit--search.is-visible .home-benefit-search-bar,
+    .home-benefit-search-bar b,
+    .home-benefit--search.is-visible .home-benefit-search-bar b {
+      transform: none;
     }
 
     .home-benefit-device-halo,
