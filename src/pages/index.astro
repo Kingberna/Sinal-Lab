@@ -95,7 +95,12 @@ const processSteps = [
         class="home-product-browser"
       />
       <div class="home-product-phone-wrap" data-scroll-shift="14">
-        <WebsiteFrame project={previewProject} variant="phone" class="home-product-phone" />
+        <WebsiteFrame
+          project={previewProject}
+          variant="phone"
+          videoSrc="/videos/telemovel.mp4"
+          class="home-product-phone"
+        />
       </div>
       <span class="home-float-label home-float-label--screens">Adaptado a todos os ecrãs</span>
       <span class="home-float-label home-float-label--speed">Rápido e fácil de utilizar</span>
@@ -203,6 +208,40 @@ const processSteps = [
       window.addEventListener('scroll', requestShift, { passive: true });
       window.addEventListener('resize', requestShift);
       updateShift();
+    }
+
+    const viewportVideos = Array.from(document.querySelectorAll<HTMLVideoElement>('[data-viewport-video]'));
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    if (reducedMotion.matches) {
+      viewportVideos.forEach((video) => {
+        const showStaticFrame = () => {
+          video.pause();
+          video.currentTime = Math.min(0.1, Number.isFinite(video.duration) ? video.duration : 0.1);
+        };
+
+        video.autoplay = false;
+        video.removeAttribute('autoplay');
+        if (video.readyState >= 1) showStaticFrame();
+        else video.addEventListener('loadedmetadata', showStaticFrame, { once: true });
+      });
+    } else if ('IntersectionObserver' in window) {
+      const videoObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const videos = entry.target.querySelectorAll<HTMLVideoElement>('[data-viewport-video]');
+            videos.forEach((video) => {
+              if (entry.isIntersecting) void video.play().catch(() => undefined);
+              else video.pause();
+            });
+          });
+        },
+        { threshold: 0.12 },
+      );
+
+      viewportVideos.forEach((video) => {
+        videoObserver.observe(video.closest('.home-product-stage') ?? video);
+      });
     }
   </script>
 </BaseLayout>

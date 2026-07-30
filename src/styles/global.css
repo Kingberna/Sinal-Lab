@@ -5400,12 +5400,19 @@
   }
 
   .website-frame__video {
+    position: relative;
+    z-index: 0;
     display: block;
     width: 100%;
     height: 31rem;
     background: var(--ink);
     object-fit: cover;
     object-position: center;
+  }
+
+  .website-frame--phone .website-frame__video {
+    height: 26rem;
+    object-position: center center;
   }
 
   .website-frame--phone .website-frame__screen > .project-visual {
@@ -6247,6 +6254,11 @@
 
     .home-product-phone .website-frame__screen > .project-visual {
       min-height: 21rem;
+    }
+
+    .home-product-phone .website-frame__video {
+      height: 27rem;
+      min-height: 27rem;
     }
 
     .home-float-label {
