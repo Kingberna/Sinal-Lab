@@ -6084,39 +6084,119 @@
     transform: none;
   }
 
-  .home-benefit--contact .home-benefit-visual {
-    background: var(--paper-bright);
+  .home-benefit--contact[data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 
-  .home-benefit--contact .home-benefit-visual::before {
-    position: absolute;
-    top: 50%;
-    left: 9%;
-    width: 78%;
-    height: 1px;
-    background: var(--ink);
-    content: '';
-    transform: rotate(-22deg);
+  .home-benefit--contact > div:last-child {
+    opacity: 0;
+    transform: translateY(0.75rem);
+    transition:
+      opacity 0.6s var(--ease),
+      transform 0.6s var(--ease);
   }
 
-  .home-benefit--contact .home-benefit-visual i {
+  .home-benefit--contact.is-visible > div:last-child {
+    opacity: 1;
+    transform: none;
+  }
+
+  .home-benefit-contact-composition {
+    position: relative;
+    order: 2;
+    width: min(100%, 23rem);
+    margin-inline: auto;
+    isolation: isolate;
+    aspect-ratio: 4 / 3;
+  }
+
+  .home-benefit-contact-halo {
     position: absolute;
-    width: 1.2rem;
-    border: 0.3rem solid var(--paper-bright);
+    z-index: 0;
+    right: -5%;
+    bottom: -13%;
+    width: 76%;
     border-radius: 50%;
+    opacity: 0.94;
     aspect-ratio: 1;
-    background: var(--ink);
-    box-shadow: 0 0 0 1px var(--ink);
+    background: var(--signal);
+    transform: scale(0.96);
+    transition: transform 0.65s var(--ease);
   }
 
-  .home-benefit--contact .home-benefit-visual i:first-child { top: 62%; left: 8%; }
-  .home-benefit--contact .home-benefit-visual i:nth-child(2) { top: 44%; left: 43%; }
-  .home-benefit--contact .home-benefit-visual i:nth-child(3) {
-    top: 20%;
-    right: 6%;
-    width: 3rem;
-    background: var(--signal);
-    box-shadow: 0 0 0 0.65rem rgb(255 88 56 / 16%);
+  .home-benefit-contact-video-shell {
+    position: absolute;
+    z-index: 2;
+    top: 2%;
+    left: 2%;
+    width: 96%;
+    overflow: hidden;
+    border: 1px solid rgb(17 19 24 / 24%);
+    border-radius: clamp(1.6rem, 3vw, 2.6rem);
+    opacity: 0;
+    aspect-ratio: 4 / 3;
+    background: var(--ink);
+    box-shadow: 0 1.4rem 3.5rem rgb(17 19 24 / 13%);
+    transform: translateY(1rem);
+    transition:
+      opacity 0.62s var(--ease),
+      transform 0.62s var(--ease);
+  }
+
+  .home-benefit-contact-video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: 53% center;
+  }
+
+  .home-benefit-contact-path {
+    position: absolute;
+    z-index: 3;
+    right: 0;
+    bottom: -6%;
+    width: 62%;
+    overflow: visible;
+    opacity: 0;
+    filter: drop-shadow(0 0.35rem 0.7rem rgb(17 19 24 / 8%));
+    transform: translateX(-0.65rem);
+    transition:
+      opacity 0.5s var(--ease) 120ms,
+      transform 0.5s var(--ease) 120ms;
+  }
+
+  .home-benefit-contact-path path {
+    fill: none;
+    stroke: var(--ink);
+    stroke-linecap: round;
+    stroke-width: 1;
+  }
+
+  .home-benefit-contact-path-start {
+    fill: var(--ink);
+  }
+
+  .home-benefit-contact-path-signal {
+    fill: var(--signal);
+    stroke: var(--paper);
+    stroke-width: 4;
+  }
+
+  .home-benefit-contact-path-core {
+    fill: var(--ink);
+  }
+
+  .home-benefit--contact.is-visible .home-benefit-contact-halo {
+    transform: scale(1);
+  }
+
+  .home-benefit--contact.is-visible .home-benefit-contact-video-shell,
+  .home-benefit--contact.is-visible .home-benefit-contact-path {
+    opacity: 1;
+    transform: none;
   }
 
   .home-device-experience {
@@ -6694,6 +6774,7 @@
 
     .home-benefit--right .home-benefit-visual,
     .home-benefit--right .home-benefit-device-composition,
+    .home-benefit--right .home-benefit-contact-composition,
     .home-benefit--right > div:last-child {
       order: initial;
     }
@@ -6759,6 +6840,28 @@
     }
 
     .home-benefit-search-bar {
+      bottom: -3%;
+    }
+
+    .home-benefit-contact-composition {
+      width: min(100%, 22rem);
+      margin-inline: auto;
+    }
+
+    .home-benefit-flow article.home-benefit--contact {
+      gap: 3rem;
+    }
+
+    .home-benefit--contact > div:last-child {
+      text-align: center;
+    }
+
+    .home-benefit--contact p {
+      margin-inline: auto;
+    }
+
+    .home-benefit-contact-path {
+      right: 2%;
       bottom: -3%;
     }
 
@@ -6866,7 +6969,11 @@
     .home-benefit-search-rings i,
     .home-benefit-search-video-shell,
     .home-benefit-search-bar,
-    .home-benefit--search > div:last-child {
+    .home-benefit--search > div:last-child,
+    .home-benefit-contact-halo,
+    .home-benefit-contact-video-shell,
+    .home-benefit-contact-path,
+    .home-benefit--contact > div:last-child {
       opacity: 1;
       transition: none !important;
     }
@@ -6887,6 +6994,18 @@
     .home-benefit--search.is-visible .home-benefit-search-bar,
     .home-benefit-search-bar b,
     .home-benefit--search.is-visible .home-benefit-search-bar b {
+      transform: none;
+    }
+
+    .home-benefit-contact-halo,
+    .home-benefit--contact.is-visible .home-benefit-contact-halo {
+      transform: scale(1);
+    }
+
+    .home-benefit-contact-video-shell,
+    .home-benefit--contact.is-visible .home-benefit-contact-video-shell,
+    .home-benefit-contact-path,
+    .home-benefit--contact.is-visible .home-benefit-contact-path {
       transform: none;
     }
 

@@ -203,6 +203,36 @@ const processSteps = [
                     <b></b>
                   </div>
                 </div>
+              ) : benefit.visual === 'contact' ? (
+                <div class="home-benefit-contact-composition" data-video-observer-root>
+                  <span class="home-benefit-contact-halo" aria-hidden="true"></span>
+                  <div class="home-benefit-contact-video-shell">
+                    <video
+                      class="home-benefit-contact-video"
+                      autoplay
+                      muted
+                      loop
+                      playsinline
+                      preload="metadata"
+                      disablepictureinpicture
+                      aria-label="Pessoa a receber um contacto relacionado com o seu negócio"
+                      data-viewport-video
+                    >
+                      <source src="/videos/transforma-em-contactos.mp4" type="video/mp4" />
+                    </video>
+                  </div>
+                  <svg
+                    class="home-benefit-contact-path"
+                    viewBox="0 0 190 82"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path d="M6 66 C52 66 48 18 102 18 H170"></path>
+                    <circle class="home-benefit-contact-path-start" cx="6" cy="66" r="3"></circle>
+                    <circle class="home-benefit-contact-path-signal" cx="170" cy="18" r="9"></circle>
+                    <circle class="home-benefit-contact-path-core" cx="170" cy="18" r="3"></circle>
+                  </svg>
+                </div>
               ) : (
                 <div class="home-benefit-visual" aria-hidden="true">
                   <i></i><i></i><i></i>
