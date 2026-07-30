@@ -1,0 +1,42 @@
+---
+import ProjectVisual from './ProjectVisual.astro';
+import type { Project } from '@/data/projects';
+
+interface Props {
+  project: Project;
+  variant: 'browser' | 'tablet' | 'phone';
+  class?: string;
+}
+
+const { project, variant, class: className = '' } = Astro.props;
+const previewSize = variant === 'phone' ? 'card' : 'hero';
+---
+
+<div
+  class:list={['website-frame', `website-frame--${variant}`, className]}
+  role="img"
+  aria-label={`Pré-visualização responsiva do ${project.tag.toLowerCase()} ${project.title} num ${variant === 'browser' ? 'computador' : variant === 'tablet' ? 'tablet' : 'telemóvel'}`}
+>
+  {
+    variant === 'browser' && (
+      <div class="website-frame__browser-bar" aria-hidden="true">
+        <span class="website-frame__controls"><i></i><i></i><i></i></span>
+        <span class="website-frame__address">lumenclinica.pt</span>
+      </div>
+    )
+  }
+  {
+    variant !== 'browser' && (
+      <span class:list={['website-frame__sensor', `website-frame__sensor--${variant}`]} aria-hidden="true"></span>
+    )
+  }
+  <div class="website-frame__screen">
+    <div class="website-frame__site-nav" aria-hidden="true">
+      <strong>lúmen</strong>
+      <span>Especialidades</span>
+      <span>Equipa</span>
+      <b>Marcar consulta</b>
+    </div>
+    <ProjectVisual project={project} size={previewSize} />
+  </div>
+</div>
