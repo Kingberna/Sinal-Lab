@@ -5836,9 +5836,9 @@
     position: absolute;
     z-index: 2;
     top: 10%;
-    left: 0;
+    left: 2%;
     display: grid;
-    width: 91%;
+    width: 96%;
     overflow: hidden;
     border: 1px solid rgb(17 19 24 / 24%);
     border-radius: clamp(1.6rem, 3vw, 2.6rem);
@@ -5890,41 +5890,6 @@
     object-position: center;
   }
 
-  .home-benefit-device-phone {
-    position: absolute;
-    z-index: 3;
-    right: 0;
-    bottom: 2%;
-    width: 27%;
-    overflow: hidden;
-    border: 0.26rem solid var(--ink);
-    border-radius: clamp(1rem, 2vw, 1.4rem);
-    opacity: 0;
-    aspect-ratio: 9 / 17;
-    background: var(--ink);
-    box-shadow: 0 1rem 2.2rem rgb(17 19 24 / 20%);
-    transform: translate3d(0.65rem, 0.35rem, 0) rotate(1.5deg);
-    transition:
-      opacity 0.55s var(--ease) 110ms,
-      transform 0.58s var(--ease) 110ms;
-  }
-
-  .home-benefit-device-phone > span {
-    position: absolute;
-    z-index: 2;
-    top: 0.28rem;
-    left: 50%;
-    width: 38%;
-    height: 0.28rem;
-    border-radius: 1rem;
-    background: var(--ink);
-    transform: translateX(-50%);
-  }
-
-  .home-benefit-device-phone .home-benefit-device-video {
-    object-position: center;
-  }
-
   .home-benefit-device-signal {
     position: absolute;
     z-index: 4;
@@ -5955,11 +5920,6 @@
   .home-benefit--screens.is-visible .home-benefit-device-monitor {
     opacity: 1;
     transform: none;
-  }
-
-  .home-benefit--screens.is-visible .home-benefit-device-phone {
-    opacity: 1;
-    transform: rotate(1.5deg);
   }
 
   .home-benefit--screens.is-visible .home-benefit-device-signal {
@@ -6661,11 +6621,6 @@
       margin-inline: auto;
     }
 
-    .home-benefit-device-phone {
-      right: 1%;
-      width: 24%;
-    }
-
     .home-device-experience {
       padding-block: 6rem;
     }
@@ -6760,7 +6715,6 @@
     .home-benefit-device-halo,
     .home-benefit-device-waves i,
     .home-benefit-device-monitor,
-    .home-benefit-device-phone,
     .home-benefit-device-signal,
     .home-benefit--screens > div:last-child {
       opacity: 1;
@@ -6780,11 +6734,6 @@
     .home-benefit-device-monitor,
     .home-benefit--screens.is-visible .home-benefit-device-monitor {
       transform: none;
-    }
-
-    .home-benefit-device-phone,
-    .home-benefit--screens.is-visible .home-benefit-device-phone {
-      transform: rotate(1.5deg);
     }
 
     .home-benefit-device-signal,
