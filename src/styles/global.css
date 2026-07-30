@@ -4912,6 +4912,23 @@
     background: var(--ink);
   }
 
+  .home-essential-hero::after {
+    position: absolute;
+    z-index: 1;
+    height: clamp(5rem, 9vw, 8rem);
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgb(17 19 24 / 22%) 34%,
+      rgb(17 19 24 / 78%) 76%,
+      var(--ink) 100%
+    );
+    content: '';
+    pointer-events: none;
+    inset-inline: 0;
+    bottom: -2px;
+  }
+
   .home-signal-backdrop {
     position: absolute;
     z-index: -1;
@@ -5116,14 +5133,13 @@
     z-index: 2;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    border-top: 1px solid var(--line-light);
   }
 
   .home-feature-rail span {
     display: flex;
     gap: 0.55rem;
     align-items: center;
-    padding-top: 0.9rem;
+    padding-top: 0.2rem;
     color: rgb(242 240 232 / 62%);
     font-size: 0.69rem;
     font-weight: 700;
@@ -5154,31 +5170,20 @@
     left: 50%;
     width: 100vw;
     background:
-      radial-gradient(
-          ellipse 48% 82% at 18% 0%,
-          rgb(255 88 56 / 12%),
-          transparent 72%
-        )
-        top center / 100% var(--home-transition-depth) no-repeat,
-      radial-gradient(
-          ellipse 54% 92% at 82% 0%,
-          rgb(83 104 255 / 14%),
-          transparent 74%
-        )
-        top center / 100% var(--home-transition-depth) no-repeat,
       linear-gradient(
           to bottom,
           var(--ink) 0%,
-          color-mix(in srgb, var(--ink) 82%, var(--paper)) 20%,
-          color-mix(in srgb, var(--ink) 48%, var(--paper)) 48%,
-          color-mix(in srgb, var(--ink) 14%, var(--paper)) 76%,
+          var(--ink) 8%,
+          color-mix(in srgb, var(--ink) 82%, var(--paper)) 26%,
+          color-mix(in srgb, var(--ink) 48%, var(--paper)) 52%,
+          color-mix(in srgb, var(--ink) 14%, var(--paper)) 78%,
           var(--paper) 100%
         )
         top center / 100% var(--home-transition-depth) no-repeat,
       var(--paper);
     content: '';
     pointer-events: none;
-    inset-block: 0;
+    inset-block: -2px 0;
     transform: translateX(-50%);
   }
 
