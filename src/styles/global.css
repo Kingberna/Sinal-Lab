@@ -5255,13 +5255,14 @@
 
   .home-product-rings {
     position: absolute;
-    top: 1%;
-    right: -4%;
-    width: min(36rem, 48vw);
+    top: 3%;
+    left: 50%;
+    width: min(36rem, 90%);
     border-radius: 50%;
     aspect-ratio: 1;
     color: var(--ink);
     opacity: 0.16;
+    transform: translateX(-50%);
   }
 
   .home-product-rings::before,
@@ -5452,11 +5453,6 @@
     object-position: center;
   }
 
-  .website-frame--phone .website-frame__video {
-    height: 26rem;
-    object-position: center center;
-  }
-
   .website-frame--phone .website-frame__screen > .project-visual {
     min-height: 26rem;
   }
@@ -5501,25 +5497,10 @@
   .home-product-browser {
     position: absolute;
     z-index: 2;
-    top: 12%;
-    right: 0;
-    width: 84%;
+    top: 15%;
+    right: 4%;
+    width: 92%;
     transform: rotate(-1.3deg);
-  }
-
-  .home-product-phone-wrap {
-    position: absolute;
-    z-index: 3;
-    bottom: 7%;
-    left: 2%;
-    width: min(14rem, 28%);
-    transform: translate3d(0, var(--scroll-shift, 0), 0);
-    transition: transform 0.12s linear;
-    will-change: transform;
-  }
-
-  .home-product-phone {
-    width: 100%;
   }
 
   .home-float-label {
@@ -6585,6 +6566,10 @@
       font-size: clamp(3.5rem, 6vw, 5.4rem);
     }
 
+    .home-product-stage {
+      min-height: 41rem;
+    }
+
     .home-device-heading {
       grid-template-columns: minmax(8rem, 0.35fr) minmax(0, 1.65fr);
     }
@@ -6643,12 +6628,8 @@
     }
 
     .home-product-browser {
-      width: 82%;
-    }
-
-    .home-product-phone-wrap {
-      left: 5%;
-      width: min(14rem, 27%);
+      right: 5%;
+      width: 90%;
     }
 
     .home-editorial-heading {
@@ -6815,34 +6796,20 @@
 
     .home-product-rings {
       top: 8%;
-      right: -28%;
-      width: 30rem;
+      left: 50%;
+      width: min(30rem, 96%);
     }
 
     .home-product-browser {
-      top: 16%;
-      width: 96%;
+      top: 18%;
+      right: 0;
+      width: 100%;
     }
 
     .home-product-browser .website-frame__screen > .project-visual,
     .home-product-browser .website-frame__video {
       height: 24rem;
       min-height: 24rem;
-    }
-
-    .home-product-phone-wrap {
-      bottom: 2%;
-      left: 2%;
-      width: 30%;
-    }
-
-    .home-product-phone .website-frame__screen > .project-visual {
-      min-height: 21rem;
-    }
-
-    .home-product-phone .website-frame__video {
-      height: 27rem;
-      min-height: 27rem;
     }
 
     .home-float-label {
