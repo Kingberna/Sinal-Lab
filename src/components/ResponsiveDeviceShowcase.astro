@@ -593,7 +593,8 @@ const deviceStates = [
     max-width: 62rem;
     font-size: clamp(4rem, 7vw, 7.75rem);
     line-height: 0.9;
-    letter-spacing: -0.065em;
+    letter-spacing: -0.025em;
+    word-spacing: 0.08em;
   }
 
   .responsive-showcase__title-stage,
@@ -630,10 +631,12 @@ const deviceStates = [
 
   .responsive-showcase.is-enhanced .responsive-showcase__title-state--initial {
     display: block;
+    letter-spacing: -0.04em;
     opacity: var(--showcase-title-initial-opacity, 1);
     transform:
       translate3d(0, var(--showcase-title-initial-y, 0), 0)
       scale(var(--showcase-title-initial-scale, 1));
+    word-spacing: 0.06em;
   }
 
   .responsive-showcase.is-enhanced .responsive-showcase__title-state--final {
@@ -1379,7 +1382,7 @@ const deviceStates = [
     }
 
     .responsive-showcase__heading h2 {
-      font-size: clamp(2.375rem, 11.5vw, 3rem);
+      font-size: clamp(2.375rem, 10.5vw, 3rem);
     }
 
     .responsive-showcase__inner {
