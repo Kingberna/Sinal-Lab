@@ -284,8 +284,8 @@ const deviceStates = [
         Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 84;
       const progress = clamp((headerHeight - rect.top) / travel);
 
-      const firstMorph = smooth(0.12, 0.36, progress);
-      const secondMorph = smooth(0.46, 0.7, progress);
+      const firstMorph = smooth(0.1, 0.32, progress);
+      const secondMorph = smooth(0.38, 0.6, progress);
       const stageWidth = stage.clientWidth;
       const stageHeight = stage.clientHeight;
 
@@ -301,17 +301,23 @@ const deviceStates = [
       const width = lerp(tabletStageWidth, phoneWidth, secondMorph);
       const height = lerp(tabletStageHeight, phoneHeight, secondMorph);
 
-      const desktopOpacity = 1 - smooth(0.23, 0.37, progress);
-      const tabletOpacity = smooth(0.23, 0.37, progress) * (1 - smooth(0.55, 0.69, progress));
-      const phoneOpacity = smooth(0.55, 0.69, progress);
-      const browserOpacity = 1 - smooth(0.14, 0.34, progress);
-      const sensorOpacity = smooth(0.56, 0.72, progress);
-      const browserHeight = lerp(34, 0, smooth(0.16, 0.37, progress));
+      const desktopOpacity = 1 - smooth(0.2, 0.33, progress);
+      const tabletOpacity = smooth(0.2, 0.33, progress) * (1 - smooth(0.48, 0.6, progress));
+      const phoneOpacity = smooth(0.48, 0.6, progress);
+      const browserOpacity = 1 - smooth(0.12, 0.31, progress);
+      const sensorOpacity = smooth(0.48, 0.62, progress);
+      const browserHeight = lerp(34, 0, smooth(0.14, 0.34, progress));
       const radius = lerp(20, 30, firstMorph) + secondMorph * 18;
       const bezel = lerp(8, 12, firstMorph) + secondMorph * 2;
-      const glowOpacity = smooth(0.58, 0.78, progress) * 0.72;
+      const glowOpacity = smooth(0.5, 0.68, progress) * 0.72;
+      const indicatorProgress =
+        progress < 0.28
+          ? lerp(0, 0.5, smooth(0.06, 0.28, progress))
+          : progress < 0.58
+            ? lerp(0.5, 1, smooth(0.3, 0.58, progress))
+            : 1;
 
-      showcase.style.setProperty('--showcase-progress', progress.toFixed(4));
+      showcase.style.setProperty('--showcase-progress', indicatorProgress.toFixed(4));
       showcase.style.setProperty('--device-width', `${width.toFixed(2)}px`);
       showcase.style.setProperty('--device-height', `${height.toFixed(2)}px`);
       showcase.style.setProperty('--device-radius', `${radius.toFixed(2)}px`);
@@ -330,10 +336,10 @@ const deviceStates = [
       showcase.style.setProperty('--signal-x', `${(Math.sin(progress * Math.PI) * 18).toFixed(2)}px`);
       showcase.style.setProperty('--signal-y', `${lerp(12, -8, progress).toFixed(2)}px`);
 
-      showcase.toggleAttribute('data-menu-open', progress > 0.82);
+      showcase.toggleAttribute('data-menu-open', progress > 0.74);
 
-      if (progress < 0.32) setPhase('desktop');
-      else if (progress < 0.63) setPhase('tablet');
+      if (progress < 0.28) setPhase('desktop');
+      else if (progress < 0.58) setPhase('tablet');
       else setPhase('phone');
     };
 
@@ -420,13 +426,27 @@ const deviceStates = [
     pointer-events: none;
   }
 
+  .responsive-showcase::after {
+    position: absolute;
+    z-index: 0;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: clamp(5rem, 7vw, 6.5rem);
+    clip-path: ellipse(112% 54% at 54% 112%);
+    background: var(--paper);
+    content: '';
+    pointer-events: none;
+  }
+
   .responsive-showcase.is-enhanced {
-    min-height: 270svh;
+    min-height: 252svh;
     padding-block: 0;
   }
 
   .responsive-showcase__sticky {
     position: relative;
+    z-index: 1;
   }
 
   .responsive-showcase.is-enhanced .responsive-showcase__sticky {
@@ -875,27 +895,29 @@ const deviceStates = [
 
   .responsive-showcase__meta {
     display: grid;
-    grid-template-columns: minmax(10rem, 0.4fr) minmax(24rem, 0.6fr);
-    gap: var(--space-lg);
-    align-items: end;
-    max-width: 68rem;
-    margin: 0.8rem auto 0;
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+    max-width: min(52rem, 80vw);
+    margin: 0.45rem auto 0;
   }
 
   .responsive-showcase__status {
-    display: grid;
-    gap: 0.2rem;
+    display: flex;
+    gap: 0.8rem;
+    align-items: baseline;
+    justify-content: center;
+    text-align: center;
   }
 
   .responsive-showcase__status strong {
     font-family: var(--font-serif);
-    font-size: var(--step-1);
+    font-size: var(--step-2);
     font-weight: 400;
   }
 
   .responsive-showcase__status span {
-    color: rgb(242 240 232 / 52%);
-    font-size: 0.66rem;
+    color: rgb(242 240 232 / 70%);
+    font-size: 0.72rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
   }
@@ -915,23 +937,24 @@ const deviceStates = [
     position: absolute;
     top: 0.2rem;
     left: 0;
-    height: 1px;
+    height: 2px;
     content: '';
   }
 
   .responsive-showcase__progress::before {
     width: 100%;
-    background: rgb(242 240 232 / 20%);
+    background: rgb(242 240 232 / 30%);
   }
 
   .responsive-showcase__progress::after {
     width: calc(var(--showcase-progress, 0) * 100%);
-    background: var(--signal);
+    background: linear-gradient(90deg, var(--signal), var(--lime));
+    transition: width 0.12s linear;
   }
 
   .responsive-showcase__progress li {
     position: relative;
-    color: rgb(242 240 232 / 42%);
+    color: rgb(242 240 232 / 30%);
     font-size: 0.6rem;
     letter-spacing: 0.07em;
     text-transform: uppercase;
@@ -954,7 +977,10 @@ const deviceStates = [
     border: 2px solid var(--ink);
     border-radius: 50%;
     aspect-ratio: 1;
-    background: rgb(242 240 232 / 42%);
+    background: rgb(242 240 232 / 32%);
+    transition:
+      background 0.22s ease,
+      box-shadow 0.22s ease;
   }
 
   .responsive-showcase__progress li:nth-child(2) > i {
@@ -974,6 +1000,11 @@ const deviceStates = [
   .responsive-showcase__progress li.is-active > i {
     background: var(--signal);
     box-shadow: 0 0 0 0.3rem rgb(255 88 56 / 14%);
+  }
+
+  .responsive-showcase__progress li:last-child.is-active > i {
+    background: var(--lime);
+    box-shadow: 0 0 0 0.3rem rgb(201 255 85 / 14%);
   }
 
   .responsive-showcase__fallback {
@@ -1093,7 +1124,7 @@ const deviceStates = [
 
   @media (max-width: 64rem) {
     .responsive-showcase.is-enhanced {
-      min-height: 250svh;
+      min-height: 238svh;
     }
 
     .responsive-showcase__heading {
@@ -1142,8 +1173,10 @@ const deviceStates = [
     }
 
     .responsive-showcase__meta {
-      grid-template-columns: minmax(9rem, 0.32fr) minmax(20rem, 0.68fr);
-      gap: var(--space-md);
+      grid-template-columns: 1fr;
+      width: 100%;
+      max-width: min(38rem, 88vw);
+      gap: 0.65rem;
     }
   }
 
