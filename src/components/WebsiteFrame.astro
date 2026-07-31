@@ -6,10 +6,11 @@ interface Props {
   project: Project;
   variant: 'browser' | 'tablet' | 'phone';
   videoSrc?: string;
+  posterSrc?: string;
   class?: string;
 }
 
-const { project, variant, videoSrc, class: className = '' } = Astro.props;
+const { project, variant, videoSrc, posterSrc, class: className = '' } = Astro.props;
 const previewSize = variant === 'phone' ? 'card' : 'hero';
 const accessibleLabel = videoSrc
   ? variant === 'phone'
@@ -46,6 +47,7 @@ const accessibleLabel = videoSrc
           loop
           playsinline
           preload="metadata"
+          poster={posterSrc}
           disablepictureinpicture
           aria-label={accessibleLabel}
           data-viewport-video
