@@ -51,7 +51,6 @@ Sem `PUBLIC_PLAUSIBLE_DOMAIN`, o website não carrega analytics e não mostra um
 - `src/config/site.ts`: marca, contactos, navegação e integrações.
 - `src/data/services.ts`: serviços e perguntas frequentes.
 - `src/data/projects.ts`: portefólio e casos de estudo conceptuais.
-- `src/data/articles.ts`: artigos e metadados editoriais.
 - `src/styles/global.css`: tokens e sistema visual.
 - `public/`: favicon e imagem de partilha.
 

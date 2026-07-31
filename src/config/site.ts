@@ -25,7 +25,6 @@ export const siteConfig = {
     { label: 'Projetos', href: '/projetos' },
     { label: 'Processo', href: '/processo' },
     { label: 'Sobre', href: '/sobre' },
-    { label: 'Insights', href: '/insights' },
   ],
   social: [] as Array<{ label: string; href: string }>,
   analytics: {

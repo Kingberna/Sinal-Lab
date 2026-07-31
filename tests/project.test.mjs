@@ -18,7 +18,6 @@ test('todas as páginas obrigatórias existem', async () => {
     'src/pages/processo.astro',
     'src/pages/sobre.astro',
     'src/pages/diagnostico.astro',
-    'src/pages/insights/index.astro',
     'src/pages/contacto.astro',
     'src/pages/privacidade.astro',
     'src/pages/cookies.astro',
@@ -26,7 +25,7 @@ test('todas as páginas obrigatórias existem', async () => {
     'src/pages/404.astro',
   ];
   await Promise.all(required.map((path) => readFile(new URL(path, root), 'utf8')));
-  assert.equal(required.length, 12);
+  assert.equal(required.length, 11);
 });
 
 test('não existem ligações placeholder nos ficheiros Astro', async () => {
@@ -48,15 +47,4 @@ test('projetos conceptuais são identificados explicitamente', async () => {
   const projectCount = (source.match(/tag: 'Projeto conceito'/g) || []).length;
   assert.ok(projectCount >= 3);
   assert.match(source, /projeções|projections/i);
-});
-
-test('as capas editoriais dos Insights existem e estão configuradas', async () => {
-  const covers = [
-    'public/images/insights/investimento-website.webp',
-    'public/images/insights/redesign-website.webp',
-    'public/images/insights/website-redes-sociais.webp',
-  ];
-  const articles = await readFile(new URL('src/data/articles.ts', root), 'utf8');
-  await Promise.all(covers.map((path) => readFile(new URL(path, root))));
-  covers.forEach((path) => assert.match(articles, new RegExp(path.replace('public', ''))));
 });
