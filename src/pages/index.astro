@@ -72,8 +72,8 @@ const processSteps = [
 
     <div class="home-feature-rail" aria-label="Características principais">
       <span>Mensagem clara</span>
-      <span>Performance</span>
-      <span>SEO técnico</span>
+      <span>Rápido em qualquer ecrã</span>
+      <span>Mais fácil de encontrar</span>
       <span>Mais contactos</span>
     </div>
   </section>
@@ -318,6 +318,7 @@ const processSteps = [
       );
 
       viewportVideos.forEach((video) => {
+        video.pause();
         videoObserver.observe(video.closest('[data-video-observer-root], .home-product-stage') ?? video);
       });
     }

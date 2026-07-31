@@ -1,6 +1,12 @@
 ---
 import { siteConfig } from '@/config/site';
-import { services } from '@/data/services';
+
+const footerServices = [
+  { label: 'Criar um website', href: '/servicos/websites-empresariais' },
+  { label: 'Renovar um website', href: '/servicos/redesign-websites' },
+  { label: 'Atrair mais clientes', href: '/servicos/seo-performance' },
+  { label: 'Acompanhamento contínuo', href: '/servicos/manutencao-evolucao' },
+] as const;
 ---
 
 <footer class="site-footer" data-footer-video-root>
@@ -37,7 +43,7 @@ import { services } from '@/data/services';
       </div>
       <nav aria-label="Serviços no rodapé">
         <span class="eyebrow">Serviços</span>
-        {services.map((service) => <a href={`/servicos/${service.slug}`}>{service.shortTitle}</a>)}
+        {footerServices.map((service) => <a href={service.href}>{service.label}</a>)}
       </nav>
       <nav aria-label="Empresa no rodapé">
         <span class="eyebrow">Sinal</span>

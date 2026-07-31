@@ -31,6 +31,7 @@ const deviceStates = [
 ---
 
 <section
+  id="responsive-showcase"
   class="responsive-showcase"
   aria-labelledby="responsive-showcase-title"
   data-responsive-showcase
@@ -118,6 +119,8 @@ const deviceStates = [
         </div>
 
         <div class="responsive-showcase__meta">
+          <p class="responsive-showcase__project-caption">Projeto conceito, Lúmen Clínica</p>
+
           <p class="responsive-showcase__status" aria-live="polite">
             <strong data-showcase-label>Computador</strong>
             <span data-showcase-copy>Experiência completa</span>
@@ -195,7 +198,7 @@ const deviceStates = [
           ))
         }
         <p class="responsive-showcase__fallback-caption">
-          Demonstração responsiva do projeto conceito Lúmen Clínica.
+          Projeto conceito, Lúmen Clínica
         </p>
       </div>
     </div>
@@ -207,6 +210,7 @@ const deviceStates = [
 
   showcases.forEach((showcase) => {
     const sticky = showcase.querySelector<HTMLElement>('[data-showcase-sticky]');
+    const heading = showcase.querySelector<HTMLElement>('.responsive-showcase__heading');
     const stage = showcase.querySelector<HTMLElement>('[data-showcase-stage]');
     const device = showcase.querySelector<HTMLElement>('[data-showcase-device]');
     const label = showcase.querySelector<HTMLElement>('[data-showcase-label]');
@@ -280,9 +284,14 @@ const deviceStates = [
 
       const stickyHeight = sticky.offsetHeight;
       const travel = Math.max(1, showcase.offsetHeight - stickyHeight);
-      const headerHeight =
-        Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 84;
-      const progress = clamp((headerHeight - rect.top) / travel);
+      const headerOffset =
+        Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-offset')) || 96;
+      const progress = clamp((headerOffset - rect.top) / travel);
+      const headingClearance = heading ? heading.getBoundingClientRect().top - headerOffset : 20;
+      const deviceClearance = device.getBoundingClientRect().top - headerOffset;
+
+      showcase.style.setProperty('--showcase-heading-opacity', clamp(headingClearance / 20).toFixed(3));
+      showcase.style.setProperty('--showcase-visual-opacity', clamp(deviceClearance / 24).toFixed(3));
 
       const firstMorph = smooth(0.1, 0.32, progress);
       const secondMorph = smooth(0.38, 0.6, progress);
@@ -356,6 +365,8 @@ const deviceStates = [
       } else {
         showcase.removeAttribute('data-menu-open');
         showcase.removeAttribute('data-phase');
+        showcase.style.removeProperty('--showcase-heading-opacity');
+        showcase.style.removeProperty('--showcase-visual-opacity');
         phase = 'desktop';
       }
     };
@@ -407,6 +418,7 @@ const deviceStates = [
     position: relative;
     overflow: clip;
     padding-block: clamp(6rem, 9vw, 9rem);
+    scroll-margin-top: calc(var(--header-offset) + 1rem);
     isolation: isolate;
     color: var(--paper);
     background:
@@ -441,7 +453,7 @@ const deviceStates = [
 
   .responsive-showcase.is-enhanced {
     min-height: 252svh;
-    padding-block: 0;
+    padding: 0 0 clamp(3.5rem, 5vw, 4.5rem);
   }
 
   .responsive-showcase__sticky {
@@ -451,14 +463,14 @@ const deviceStates = [
 
   .responsive-showcase.is-enhanced .responsive-showcase__sticky {
     position: sticky;
-    top: calc(var(--header-height) + 0.75rem);
+    top: var(--header-offset);
     display: flex;
-    min-height: calc(100svh - var(--header-height) - 0.75rem);
+    min-height: calc(100svh - var(--header-offset));
     align-items: center;
   }
 
   .responsive-showcase__inner {
-    width: 100%;
+    width: min(calc(100% - clamp(2rem, 6vw, 7.5rem)), 94rem);
   }
 
   .responsive-showcase__heading {
@@ -466,6 +478,8 @@ const deviceStates = [
     grid-template-columns: minmax(9rem, 0.32fr) minmax(0, 1.16fr) minmax(16rem, 0.52fr);
     gap: var(--space-lg);
     align-items: end;
+    opacity: var(--showcase-heading-opacity, 1);
+    transition: opacity 0.12s linear;
   }
 
   .responsive-showcase__heading h2 {
@@ -494,7 +508,9 @@ const deviceStates = [
     position: relative;
     display: grid;
     min-height: clamp(21rem, 46vh, 31rem);
+    opacity: var(--showcase-visual-opacity, 1);
     place-items: center;
+    transition: opacity 0.12s linear;
   }
 
   .responsive-showcase__rings {
@@ -895,14 +911,37 @@ const deviceStates = [
 
   .responsive-showcase__meta {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 0.65rem;
+    align-items: baseline;
     max-width: min(52rem, 80vw);
     margin: 0.45rem auto 0;
   }
 
+  .responsive-showcase__project-caption {
+    display: flex;
+    grid-row: 1;
+    grid-column: 2;
+    gap: 0.45rem;
+    align-items: center;
+    color: rgb(242 240 232 / 62%);
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .responsive-showcase__project-caption::before {
+    width: 0.36rem;
+    border-radius: 50%;
+    aspect-ratio: 1;
+    background: var(--signal);
+    content: '';
+  }
+
   .responsive-showcase__status {
     display: flex;
+    grid-row: 1;
+    grid-column: 1 / -1;
     gap: 0.8rem;
     align-items: baseline;
     justify-content: center;
@@ -925,6 +964,7 @@ const deviceStates = [
   .responsive-showcase__progress {
     position: relative;
     display: grid;
+    grid-column: 1 / -1;
     grid-template-columns: repeat(3, 1fr);
     margin: 0;
     padding-top: 0.9rem;
@@ -954,7 +994,7 @@ const deviceStates = [
 
   .responsive-showcase__progress li {
     position: relative;
-    color: rgb(242 240 232 / 30%);
+    color: rgb(242 240 232 / 50%);
     font-size: 0.6rem;
     letter-spacing: 0.07em;
     text-transform: uppercase;
@@ -977,7 +1017,7 @@ const deviceStates = [
     border: 2px solid var(--ink);
     border-radius: 50%;
     aspect-ratio: 1;
-    background: rgb(242 240 232 / 32%);
+    background: rgb(242 240 232 / 48%);
     transition:
       background 0.22s ease,
       box-shadow 0.22s ease;
@@ -1189,6 +1229,10 @@ const deviceStates = [
       font-size: clamp(3.5rem, 15vw, 5.25rem);
     }
 
+    .responsive-showcase__inner {
+      width: min(calc(100% - 2rem), 94rem);
+    }
+
     .responsive-showcase__fallback {
       grid-template-columns: 1fr;
       gap: 4.5rem;
@@ -1220,6 +1264,20 @@ const deviceStates = [
     .responsive-showcase__fallback-caption {
       margin-top: 0;
       text-align: left;
+    }
+  }
+
+  @media (min-width: 44.01rem) and (max-height: 50rem) {
+    .responsive-showcase__motion {
+      margin-top: 1.25rem;
+    }
+
+    .responsive-showcase__visual {
+      min-height: clamp(18rem, 39vh, 22rem);
+    }
+
+    .responsive-showcase__meta {
+      margin-top: 0.35rem;
     }
   }
 

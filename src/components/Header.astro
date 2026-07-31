@@ -47,7 +47,7 @@ const headerNavigation = siteConfig.navigation.filter((item) => item.href !== '/
   </nav>
 
   <a class="header-cta" href="/diagnostico">
-    Pedir diagnóstico
+    Diagnóstico gratuito
     <span aria-hidden="true">↗</span>
   </a>
 
@@ -115,8 +115,24 @@ const headerNavigation = siteConfig.navigation.filter((item) => item.href !== '/
   const mobileServices = document.querySelector<HTMLDetailsElement>('[data-mobile-services]');
   let previousFocus: HTMLElement | null = null;
 
-  const setHeader = () => header?.toggleAttribute('data-scrolled', window.scrollY > 16);
+  const syncHeaderOffset = () => {
+    if (!header) return;
+    document.documentElement.style.setProperty('--header-offset', `${Math.ceil(header.getBoundingClientRect().bottom)}px`);
+  };
+
+  const setHeader = () => {
+    header?.toggleAttribute('data-scrolled', window.scrollY > 16);
+    syncHeaderOffset();
+  };
+
   window.addEventListener('scroll', setHeader, { passive: true });
+  window.addEventListener('resize', syncHeaderOffset);
+
+  if (header && 'ResizeObserver' in window) {
+    const headerResizeObserver = new ResizeObserver(syncHeaderOffset);
+    headerResizeObserver.observe(header);
+  }
+
   setHeader();
 
   const getFocusable = () =>
