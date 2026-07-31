@@ -1,0 +1,97 @@
+---
+import { siteConfig } from '@/config/site';
+
+const footerServices = [
+  { label: 'Criar um website', href: '/servicos/websites-empresariais' },
+  { label: 'Renovar um website', href: '/servicos/redesign-websites' },
+  { label: 'Atrair mais clientes', href: '/servicos/seo-performance' },
+  { label: 'Acompanhamento contínuo', href: '/servicos/manutencao-evolucao' },
+] as const;
+---
+
+<footer class="site-footer" data-footer-video-root>
+  <video
+    class="footer-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    poster="/images/video-posters/footer-background.jpg"
+    disablepictureinpicture
+    aria-hidden="true"
+    tabindex="-1"
+  >
+    <source src="/videos/footer-background.mp4" type="video/mp4" />
+  </video>
+  <div class="footer-overlay" aria-hidden="true"></div>
+
+  <div class="footer-content">
+    <div class="footer-head">
+      <a class="brand brand--footer" href="/" aria-label={`${siteConfig.name}, página inicial`}>
+        <span class="brand-mark" aria-hidden="true"><i></i></span>
+        <span>SINAL</span>
+      </a>
+      <p>{siteConfig.tagline}</p>
+    </div>
+
+    <div class="footer-grid">
+      <div class="footer-contact">
+        <span class="eyebrow">Um projeto em mente?</span>
+        <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}<span aria-hidden="true">↗</span></a>
+        {siteConfig.phone.href && <a class="footer-phone" href={siteConfig.phone.href}>{siteConfig.phone.display}</a>}
+        <p>{siteConfig.responseTime}</p>
+      </div>
+      <nav aria-label="Serviços no rodapé">
+        <span class="eyebrow">Serviços</span>
+        {footerServices.map((service) => <a href={service.href}>{service.label}</a>)}
+      </nav>
+      <nav aria-label="Empresa no rodapé">
+        <span class="eyebrow">Sinal</span>
+        {siteConfig.navigation.slice(1).map((item) => <a href={item.href}>{item.label}</a>)}
+        <a href="/contacto">Contacto</a>
+      </nav>
+      <nav aria-label="Informação legal no rodapé">
+        <span class="eyebrow">Informação</span>
+        <a href="/privacidade">Privacidade</a>
+        <a href="/cookies">Cookies</a>
+        <a href="/informacao-legal">Informação legal</a>
+        <button type="button" data-cookie-settings>Preferências de privacidade</button>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© {new Date().getFullYear()} {siteConfig.name}. Todos os direitos reservados.</p>
+      <p>Portugal · A trabalhar com empresas em todo o país.</p>
+      <a href="#main-content">Voltar ao início <span aria-hidden="true">↑</span></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const footer = document.querySelector<HTMLElement>('[data-footer-video-root]');
+  const footerVideo = footer?.querySelector<HTMLVideoElement>('.footer-video');
+
+  if (footer && footerVideo) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    if (reducedMotion.matches) {
+      footerVideo.autoplay = false;
+      footerVideo.removeAttribute('autoplay');
+      footerVideo.pause();
+    } else if ('IntersectionObserver' in window) {
+      footerVideo.pause();
+      const footerVideoObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry?.isIntersecting) void footerVideo.play().catch(() => undefined);
+          else footerVideo.pause();
+        },
+        { threshold: 0.04 },
+      );
+
+      footerVideoObserver.observe(footer);
+    } else {
+      void footerVideo.play().catch(() => undefined);
+    }
+  }
+</script>

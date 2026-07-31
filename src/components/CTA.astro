@@ -1,0 +1,34 @@
+---
+import ButtonLink from './ButtonLink.astro';
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  text?: string;
+  primaryHref?: string;
+  primaryLabel?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+}
+const {
+  eyebrow = 'O próximo sinal',
+  title = 'Vamos pôr o seu negócio no mapa certo.',
+  text = 'Conte-nos onde está e onde quer chegar. Começamos por um diagnóstico claro, sem compromisso.',
+  primaryHref = '/diagnostico',
+  primaryLabel = 'Pedir diagnóstico gratuito',
+  secondaryHref = '/contacto',
+  secondaryLabel = 'Falar connosco',
+} = Astro.props;
+---
+
+<section class="final-cta">
+  <div class="cta-rings" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="final-cta-inner" data-reveal>
+    <span class="eyebrow">{eyebrow}</span>
+    <h2>{title}</h2>
+    <p>{text}</p>
+    <div class="button-row">
+      <ButtonLink href={primaryHref} label={primaryLabel} variant="dark" />
+      <ButtonLink href={secondaryHref} label={secondaryLabel} variant="line" />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,61 @@
+---
+import type { Project } from '@/data/projects';
+
+interface Props {
+  project: Project;
+  size?: 'card' | 'hero';
+}
+
+const { project, size = 'card' } = Astro.props;
+---
+
+<div class:list={['project-visual', `project-visual--${project.palette}`, `project-visual--${size}`]} aria-hidden="true">
+  <div class="visual-grid"></div>
+  {
+    project.slug === 'lumen-clinica' && (
+      <>
+        <div class="lumen-word">lúmen<span>saúde com espaço.</span></div>
+        <div class="lumen-card"><small>Marcar consulta</small><strong>Como se sente?</strong><i>→</i></div>
+        <div class="signal-rings"><i></i><i></i><i></i></div>
+      </>
+    )
+  }
+  {
+    project.slug === 'norte-base' && (
+      <>
+        <div class="norte-title">BASE/<br />NORTE</div>
+        <div class="norte-photo"><span></span><i>41°09'N</i></div>
+        <div class="norte-label">Construir<br />com critério.</div>
+      </>
+    )
+  }
+  {
+    project.slug === 'casa-atlantica' && (
+      <>
+        <div class="atlantic-sun"></div>
+        <div class="atlantic-title">CASA<br /><em>ATLÂNTICA</em></div>
+        <div class="atlantic-book">RESERVAR <span>→</span></div>
+        <div class="atlantic-wave"></div>
+      </>
+    )
+  }
+  {
+    project.slug === 'criterio-consultores' && (
+      <>
+        <div class="criterio-index">01—06</div>
+        <div class="criterio-title">Decidir<br />com <em>critério.</em></div>
+        <div class="criterio-chart"><i></i><i></i><i></i><i></i><i></i></div>
+      </>
+    )
+  }
+  {
+    project.slug === 'forma-objetos' && (
+      <>
+        <div class="forma-name">FORMA</div>
+        <div class="forma-object"><i></i></div>
+        <div class="forma-copy">Objetos com<br />origem à vista.</div>
+        <div class="forma-price">Tigela 02 · 38€</div>
+      </>
+    )
+  }
+</div>

@@ -1,0 +1,251 @@
+---
+import { services } from '@/data/services';
+
+interface Props {
+  mode?: 'contact' | 'diagnostic';
+}
+
+const { mode = 'contact' } = Astro.props;
+const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
+const isDemo = import.meta.env.DEV;
+---
+
+<form class="contact-form" data-contact-form data-mode={mode} data-demo={String(isDemo)} novalidate>
+  <input type="hidden" name="formType" value={mode} />
+  <input type="hidden" name="startedAt" value="" data-started-at />
+  <div class="honey-field" aria-hidden="true">
+    <label for={`${mode}-website-company`}>Não preencher este campo</label>
+    <input id={`${mode}-website-company`} name="websiteCompany" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <div class="form-grid">
+    <div class="field">
+      <label for={`${mode}-name`}>Nome <span aria-hidden="true">*</span></label>
+      <input id={`${mode}-name`} name="name" type="text" autocomplete="name" required minlength="2" data-validate aria-describedby={`${mode}-name-error`} />
+      <span class="field-error" id={`${mode}-name-error`} aria-live="polite"></span>
+    </div>
+    <div class="field">
+      <label for={`${mode}-email`}>Email profissional <span aria-hidden="true">*</span></label>
+      <input id={`${mode}-email`} name="email" type="email" autocomplete="email" required data-validate aria-describedby={`${mode}-email-error`} />
+      <span class="field-error" id={`${mode}-email-error`} aria-live="polite"></span>
+    </div>
+    <div class="field">
+      <label for={`${mode}-company`}>Empresa <span aria-hidden="true">*</span></label>
+      <input id={`${mode}-company`} name="company" type="text" autocomplete="organization" required minlength="2" data-validate aria-describedby={`${mode}-company-error`} />
+      <span class="field-error" id={`${mode}-company-error`} aria-live="polite"></span>
+    </div>
+
+    {
+      mode === 'contact' ? (
+        <>
+          <div class="field">
+            <label for="contact-phone">Telefone <span class="optional">Opcional</span></label>
+            <input id="contact-phone" name="phone" type="tel" autocomplete="tel" />
+          </div>
+          <div class="field field--wide">
+            <label for="contact-service">Em que podemos ajudar? <span aria-hidden="true">*</span></label>
+            <select id="contact-service" name="service" required data-validate aria-describedby="contact-service-error">
+              <option value="">Selecione uma opção</option>
+              {services.map((service) => <option value={service.shortTitle}>{service.shortTitle}</option>)}
+              <option value="Ainda não sei">Ainda não sei</option>
+            </select>
+            <span class="field-error" id="contact-service-error" aria-live="polite"></span>
+          </div>
+          <div class="field field--wide">
+            <label for="contact-message">Fale-nos do projeto <span aria-hidden="true">*</span></label>
+            <textarea id="contact-message" name="message" rows="6" required minlength="20" maxlength="3000" data-validate aria-describedby="contact-message-help contact-message-error"></textarea>
+            <small id="contact-message-help">Contexto, principal desafio e o que gostaria de alcançar.</small>
+            <span class="field-error" id="contact-message-error" aria-live="polite"></span>
+          </div>
+        </>
+      ) : (
+        <>
+          <div class="field">
+            <label for="diagnostic-url">Website atual <span class="optional">Opcional</span></label>
+            <input id="diagnostic-url" name="url" type="url" inputmode="url" placeholder="https://" data-validate aria-describedby="diagnostic-url-error" />
+            <span class="field-error" id="diagnostic-url-error" aria-live="polite"></span>
+          </div>
+          <div class="field">
+            <label for="diagnostic-sector">Setor <span aria-hidden="true">*</span></label>
+            <select id="diagnostic-sector" name="sector" required data-validate aria-describedby="diagnostic-sector-error">
+              <option value="">Selecione o setor</option>
+              <option>Saúde e bem-estar</option><option>Imobiliário</option><option>Construção</option>
+              <option>Restauração</option><option>Turismo</option><option>Consultoria</option>
+              <option>Contabilidade</option><option>Advocacia</option><option>Comércio</option>
+              <option>Tecnologia / B2B</option><option>Outro</option>
+            </select>
+            <span class="field-error" id="diagnostic-sector-error" aria-live="polite"></span>
+          </div>
+          <div class="field">
+            <label for="diagnostic-problem">Principal problema <span aria-hidden="true">*</span></label>
+            <select id="diagnostic-problem" name="problem" required data-validate aria-describedby="diagnostic-problem-error">
+              <option value="">Selecione uma opção</option>
+              <option>Ainda não temos website</option>
+              <option>O website parece desatualizado</option>
+              <option>O website é lento ou difícil de usar</option>
+              <option>Não aparecemos corretamente no Google</option>
+              <option>Temos visitas, mas poucos contactos</option>
+              <option>É difícil atualizar conteúdos</option>
+              <option>Outro</option>
+            </select>
+            <span class="field-error" id="diagnostic-problem-error" aria-live="polite"></span>
+          </div>
+          <div class="field">
+            <label for="diagnostic-goal">Objetivo principal <span aria-hidden="true">*</span></label>
+            <select id="diagnostic-goal" name="goal" required data-validate aria-describedby="diagnostic-goal-error">
+              <option value="">Selecione uma opção</option>
+              <option>Gerar mais pedidos de contacto</option>
+              <option>Transmitir mais credibilidade</option>
+              <option>Vender online</option>
+              <option>Apoiar a equipa comercial</option>
+              <option>Melhorar a presença no Google</option>
+              <option>Lançar uma nova marca ou serviço</option>
+            </select>
+            <span class="field-error" id="diagnostic-goal-error" aria-live="polite"></span>
+          </div>
+          <div class="field">
+            <label for="diagnostic-timeline">Prazo previsto <span aria-hidden="true">*</span></label>
+            <select id="diagnostic-timeline" name="timeline" required data-validate aria-describedby="diagnostic-timeline-error">
+              <option value="">Selecione uma opção</option>
+              <option>Assim que possível</option><option>1 a 3 meses</option><option>3 a 6 meses</option>
+              <option>Mais de 6 meses</option><option>Ainda estamos a explorar</option>
+            </select>
+            <span class="field-error" id="diagnostic-timeline-error" aria-live="polite"></span>
+          </div>
+          <div class="field">
+            <label for="diagnostic-budget">Investimento indicativo <span class="optional">Opcional</span></label>
+            <select id="diagnostic-budget" name="budget">
+              <option value="">Prefiro falar primeiro</option>
+              <option>Até 3.000 €</option><option>3.000 € – 6.000 €</option><option>6.000 € – 10.000 €</option>
+              <option>10.000 € – 20.000 €</option><option>Mais de 20.000 €</option>
+            </select>
+          </div>
+          <div class="field field--wide">
+            <label for="diagnostic-context">O que gostaria que analisássemos? <span aria-hidden="true">*</span></label>
+            <textarea id="diagnostic-context" name="message" rows="6" required minlength="20" maxlength="3000" data-validate aria-describedby="diagnostic-context-help diagnostic-context-error"></textarea>
+            <small id="diagnostic-context-help">Partilhe o contexto que nos ajuda a preparar uma resposta útil.</small>
+            <span class="field-error" id="diagnostic-context-error" aria-live="polite"></span>
+          </div>
+        </>
+      )
+    }
+  </div>
+
+  {
+    turnstileKey && (
+      <div class="turnstile-wrap">
+        <div class="cf-turnstile" data-sitekey={turnstileKey} data-theme="light"></div>
+        <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+      </div>
+    )
+  }
+
+  <div class="consent-field">
+    <input id={`${mode}-consent`} name="consent" type="checkbox" value="yes" required data-validate aria-describedby={`${mode}-consent-error`} />
+    <label for={`${mode}-consent`}>
+      Li e aceito a <a href="/privacidade" target="_blank">política de privacidade</a>. Autorizo o tratamento dos dados para resposta a este pedido.
+    </label>
+    <span class="field-error" id={`${mode}-consent-error`} aria-live="polite"></span>
+  </div>
+
+  <div class="form-submit">
+    <button class="button button--dark" type="submit">
+      <span>{mode === 'diagnostic' ? 'Enviar pedido de diagnóstico' : 'Enviar pedido'}</span>
+      <i aria-hidden="true">↗</i>
+    </button>
+    <p>Os seus dados são usados apenas para responder a este contacto.</p>
+  </div>
+  <div class="form-status" role="status" aria-live="polite" tabindex="-1" hidden data-form-status></div>
+</form>
+
+<script>
+  const forms = document.querySelectorAll<HTMLFormElement>('[data-contact-form]');
+
+  const validationMessage = (field: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement) => {
+    if (field.validity.valueMissing) return field.type === 'checkbox' ? 'É necessário aceitar a política de privacidade.' : 'Preencha este campo.';
+    if (field.validity.typeMismatch) return field.type === 'email' ? 'Introduza um email válido.' : 'Introduza um endereço válido.';
+    if (field.validity.tooShort && (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement)) {
+      return `Escreva pelo menos ${field.minLength} caracteres.`;
+    }
+    if (field.validity.tooLong && (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement)) {
+      return `Use no máximo ${field.maxLength} caracteres.`;
+    }
+    return 'Verifique o valor introduzido.';
+  };
+
+  const showFieldState = (field: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement) => {
+    const errorId = field.getAttribute('aria-describedby')?.split(' ').find((id) => id.endsWith('-error'));
+    const error = errorId ? document.getElementById(errorId) : null;
+    const valid = field.checkValidity();
+    if (valid) field.removeAttribute('aria-invalid');
+    else field.setAttribute('aria-invalid', 'true');
+    if (error) error.textContent = valid ? '' : validationMessage(field);
+    return valid;
+  };
+
+  forms.forEach((form) => {
+    const status = form.querySelector<HTMLElement>('[data-form-status]');
+    const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const startedAt = form.querySelector<HTMLInputElement>('[data-started-at]');
+    if (startedAt) startedAt.value = String(Date.now());
+
+    const validationFields = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>('[data-validate]');
+    validationFields.forEach((field) => {
+      field.addEventListener('blur', () => showFieldState(field));
+      field.addEventListener('input', () => {
+        if (field.hasAttribute('aria-invalid')) showFieldState(field);
+      });
+    });
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>('[data-validate]'));
+      const invalid = fields.filter((field) => !showFieldState(field));
+      if (invalid.length) {
+        invalid[0]?.focus();
+        return;
+      }
+
+      if (!status || !submit) return;
+      status.hidden = false;
+      status.dataset.state = 'loading';
+      status.textContent = 'A preparar o envio…';
+
+      if (form.dataset.demo === 'true') {
+        status.dataset.state = 'demo';
+        status.innerHTML = '<strong>Modo de demonstração local.</strong> A validação ficou concluída, mas nenhum dado foi enviado. Para testar o envio real, configure as variáveis de email e execute o projeto através do ambiente Vercel.';
+        status.focus();
+        return;
+      }
+
+      submit.disabled = true;
+      submit.setAttribute('aria-busy', 'true');
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.message || 'Não foi possível enviar o pedido.');
+        status.dataset.state = 'success';
+        status.innerHTML = '<strong>Pedido enviado.</strong> Obrigado pelo contexto. Vamos analisar a informação e responder por email.';
+        form.reset();
+        if (startedAt) startedAt.value = String(Date.now());
+      } catch (error) {
+        status.dataset.state = 'error';
+        status.innerHTML = `<strong>O envio não ficou concluído.</strong> ${error instanceof Error ? error.message : 'Tente novamente ou contacte-nos por email.'}`;
+      } finally {
+        submit.disabled = false;
+        submit.removeAttribute('aria-busy');
+        status.focus();
+      }
+    });
+  });
+
+  const service = new URLSearchParams(window.location.search).get('servico');
+  if (service) {
+    const select = document.querySelector<HTMLSelectElement>('#contact-service');
+    if (select && Array.from(select.options).some((option) => option.value === service)) select.value = service;
+  }
+</script>

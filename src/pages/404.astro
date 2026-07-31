@@ -1,0 +1,23 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ButtonLink from '@/components/ButtonLink.astro';
+---
+
+<BaseLayout
+  title="Página não encontrada"
+  description="A página que procura não existe ou mudou de endereço."
+  noindex
+>
+  <section class="not-found">
+    <div class="not-found-signal" aria-hidden="true"><i></i><i></i><i></i><span>404</span></div>
+    <div data-reveal>
+      <span class="eyebrow">Sinal perdido · 404</span>
+      <h1>Esta página saiu da frequência.</h1>
+      <p>A ligação pode estar desatualizada ou o endereço foi escrito incorretamente.</p>
+      <div class="button-row">
+        <ButtonLink href="/" label="Voltar à página inicial" variant="dark" />
+        <ButtonLink href="/contacto" label="Pedir ajuda" variant="line" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

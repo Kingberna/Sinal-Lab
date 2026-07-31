@@ -1,0 +1,50 @@
+---
+import LegalPage from '@/components/LegalPage.astro';
+import { siteConfig } from '@/config/site';
+---
+
+<LegalPage
+  title="Política de privacidade"
+  description="Como recolhemos, utilizamos e protegemos os dados pessoais enviados através deste website."
+>
+  <section id="responsavel">
+    <h2>1. Responsável pelo tratamento</h2>
+    <p>O responsável pelo tratamento é {siteConfig.legalName}, contactável através de <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>.</p>
+    {siteConfig.legalTaxId && <p>NIF: {siteConfig.legalTaxId}.</p>}
+    {siteConfig.legalAddress && <p>Morada: {siteConfig.legalAddress}.</p>}
+    {(!siteConfig.legalTaxId || !siteConfig.legalAddress) && (
+      <p class="legal-warning"><strong>Antes do lançamento comercial:</strong> completar nas variáveis de ambiente a denominação jurídica, NIF e morada da entidade responsável. Estes dados não foram inventados.</p>
+    )}
+  </section>
+  <section id="dados">
+    <h2>2. Dados que recolhemos</h2>
+    <p>Nos formulários podemos recolher nome, email, empresa, telefone, URL, setor, objetivos, prazo, intervalo de orçamento e a mensagem que decidir partilhar.</p>
+    <p>O servidor pode ainda tratar informação técnica estritamente necessária à segurança e funcionamento, como endereço IP, data, hora e agente do navegador, de acordo com os registos do fornecedor de alojamento.</p>
+  </section>
+  <section id="finalidades">
+    <h2>3. Finalidades e fundamento</h2>
+    <ul>
+      <li>Responder a pedidos de contacto ou diagnóstico, com base em diligências pré-contratuais e no seu pedido.</li>
+      <li>Prevenir abuso e proteger o serviço, com base no interesse legítimo de segurança.</li>
+      <li>Cumprir obrigações legais aplicáveis.</li>
+    </ul>
+    <p>Não utilizamos os dados dos formulários para subscrever newsletters ou listas comerciais sem um consentimento separado.</p>
+  </section>
+  <section id="conservacao">
+    <h2>4. Conservação</h2>
+    <p>Os pedidos sem relação contratual devem ser eliminados quando deixarem de ser necessários para resposta e seguimento comercial razoável. Dados ligados a propostas ou contratos podem ser conservados durante os prazos legais aplicáveis.</p>
+  </section>
+  <section id="destinatarios">
+    <h2>5. Prestadores e transferências</h2>
+    <p>O website pode recorrer a fornecedores de alojamento, email transacional e proteção anti-spam. Apenas são configurados os serviços indicados nas variáveis de ambiente do projeto.</p>
+    <p>Antes do lançamento, a entidade responsável deve identificar os fornecedores efetivamente utilizados, os respetivos locais de tratamento e mecanismos de transferência internacional quando aplicável.</p>
+  </section>
+  <section id="direitos">
+    <h2>6. Os seus direitos</h2>
+    <p>Pode solicitar acesso, retificação, apagamento, limitação, oposição ou portabilidade quando aplicável, através de <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>. Tem também o direito de apresentar reclamação à Comissão Nacional de Proteção de Dados.</p>
+  </section>
+  <section id="seguranca">
+    <h2>7. Segurança e atualizações</h2>
+    <p>Aplicamos medidas técnicas e organizativas proporcionais ao risco. Nenhum sistema é totalmente imune; por isso, revemos acessos, dependências e fornecedores quando a operação muda.</p>
+  </section>
+</LegalPage>

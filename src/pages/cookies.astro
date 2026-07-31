@@ -1,0 +1,30 @@
+---
+import LegalPage from '@/components/LegalPage.astro';
+---
+
+<LegalPage
+  title="Política de cookies"
+  description="Que armazenamento é utilizado neste website e como pode gerir as suas preferências."
+>
+  <section>
+    <h2>1. Estado atual</h2>
+    <p>Por defeito, este website não instala cookies opcionais nem carrega analytics. Por esse motivo, o banner de consentimento não aparece enquanto não existir uma ferramenta opcional configurada.</p>
+  </section>
+  <section>
+    <h2>2. Preferência de privacidade</h2>
+    <p>Quando analytics opcional é configurado, a sua decisão é guardada localmente no navegador com a chave <code>sinal-privacy-choice</code>. Este armazenamento serve apenas para recordar a escolha e evitar perguntar em cada visita.</p>
+    <p>Pode alterar a decisão através da ligação “Preferências de privacidade” no rodapé.</p>
+  </section>
+  <section>
+    <h2>3. Analytics opcional</h2>
+    <p>O projeto está preparado para Plausible Analytics, mas o script só é carregado quando existe um domínio configurado e o visitante escolhe aceitar. A configuração ativa deve ser confirmada nesta política antes da publicação.</p>
+  </section>
+  <section>
+    <h2>4. Proteção anti-spam</h2>
+    <p>Se Cloudflare Turnstile for ativado, o fornecedor pode tratar dados técnicos necessários para distinguir pedidos legítimos de abuso. A sua utilização e documentação devem ser adicionadas a esta política quando a integração for configurada.</p>
+  </section>
+  <section>
+    <h2>5. Limpar preferências</h2>
+    <p>Pode usar o botão do rodapé ou apagar os dados do website nas definições do navegador. Bloquear armazenamento local pode fazer com que a preferência não seja recordada.</p>
+  </section>
+</LegalPage>

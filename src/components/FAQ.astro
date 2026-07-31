@@ -1,0 +1,29 @@
+---
+import type { FaqItem } from '@/data/services';
+
+interface Props {
+  items: FaqItem[];
+  title?: string;
+}
+
+const { items, title = 'Perguntas frequentes' } = Astro.props;
+---
+
+<section class="faq-section section-shell">
+  <div class="faq-heading" data-reveal>
+    <span class="eyebrow">Sem letras pequenas</span>
+    <h2>{title}</h2>
+  </div>
+  <div class="faq-list" data-reveal>
+    {items.map((item, index) => (
+      <details>
+        <summary>
+          <span>{String(index + 1).padStart(2, '0')}</span>
+          <strong>{item.question}</strong>
+          <i aria-hidden="true">＋</i>
+        </summary>
+        <div><p>{item.answer}</p></div>
+      </details>
+    ))}
+  </div>
+</section>
