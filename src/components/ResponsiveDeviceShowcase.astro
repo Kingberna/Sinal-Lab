@@ -211,6 +211,9 @@ const deviceStates = [
   showcases.forEach((showcase) => {
     const sticky = showcase.querySelector<HTMLElement>('[data-showcase-sticky]');
     const heading = showcase.querySelector<HTMLElement>('.responsive-showcase__heading');
+    const title = showcase.querySelector<HTMLElement>('.responsive-showcase__heading h2');
+    const description = showcase.querySelector<HTMLElement>('.responsive-showcase__heading p');
+    const motion = showcase.querySelector<HTMLElement>('[data-showcase-motion]');
     const stage = showcase.querySelector<HTMLElement>('[data-showcase-stage]');
     const device = showcase.querySelector<HTMLElement>('[data-showcase-device]');
     const label = showcase.querySelector<HTMLElement>('[data-showcase-label]');
@@ -220,7 +223,7 @@ const deviceStates = [
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const compactLayout = window.matchMedia('(max-width: 44rem)');
 
-    if (!sticky || !stage || !device || !label || !copy) return;
+    if (!sticky || !heading || !title || !description || !motion || !stage || !device || !label || !copy) return;
 
     const states = {
       desktop: {
@@ -246,6 +249,10 @@ const deviceStates = [
     let phase: Phase = 'desktop';
     let enhanced = false;
     let isNearViewport = true;
+    let expandedTitleSize = 0;
+    let expandedDescriptionWidth = 0;
+    let expandedHeadingGap = 0;
+    let expandedMotionGap = 0;
 
     const clamp = (value: number, minimum = 0, maximum = 1) =>
       Math.min(maximum, Math.max(minimum, value));
@@ -253,6 +260,28 @@ const deviceStates = [
     const smooth = (start: number, end: number, value: number) => {
       const amount = clamp((value - start) / (end - start));
       return amount * amount * (3 - 2 * amount);
+    };
+
+    const compactProperties = [
+      '--showcase-title-size',
+      '--showcase-description-width',
+      '--showcase-heading-gap',
+      '--showcase-heading-shift',
+      '--showcase-motion-gap',
+    ];
+
+    const resetCompactLayout = () => {
+      compactProperties.forEach((property) => showcase.style.removeProperty(property));
+    };
+
+    const measureExpandedLayout = () => {
+      resetCompactLayout();
+
+      const headingStyles = getComputedStyle(heading);
+      expandedTitleSize = Number.parseFloat(getComputedStyle(title).fontSize) || 64;
+      expandedDescriptionWidth = Number.parseFloat(getComputedStyle(description).maxWidth) || 496;
+      expandedHeadingGap = Number.parseFloat(headingStyles.rowGap) || 24;
+      expandedMotionGap = Number.parseFloat(getComputedStyle(motion).marginTop) || 32;
     };
 
     const setPhase = (nextPhase: Phase) => {
@@ -287,11 +316,32 @@ const deviceStates = [
       const headerOffset =
         Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-offset')) || 96;
       const progress = clamp((headerOffset - rect.top) / travel);
-      const headingClearance = heading ? heading.getBoundingClientRect().top - headerOffset : 20;
-      const deviceClearance = device.getBoundingClientRect().top - headerOffset;
+      const compactProgress = smooth(0.08, 0.62, progress);
+      const compactTitleSize = clamp(window.innerWidth * 0.045, 38, 72);
+      const compactDescriptionWidth = window.innerWidth <= 768 ? 380 : 400;
+      const compactHeadingGap = window.innerWidth <= 768 ? 12 : 20;
+      const expandedHeadingShift = window.innerWidth > 1024 && window.innerHeight <= 900 ? 10 : 0;
 
-      showcase.style.setProperty('--showcase-heading-opacity', clamp(headingClearance / 20).toFixed(3));
-      showcase.style.setProperty('--showcase-visual-opacity', clamp(deviceClearance / 24).toFixed(3));
+      showcase.style.setProperty(
+        '--showcase-title-size',
+        `${lerp(expandedTitleSize, compactTitleSize, compactProgress).toFixed(2)}px`,
+      );
+      showcase.style.setProperty(
+        '--showcase-description-width',
+        `${lerp(expandedDescriptionWidth, compactDescriptionWidth, compactProgress).toFixed(2)}px`,
+      );
+      showcase.style.setProperty(
+        '--showcase-heading-gap',
+        `${lerp(expandedHeadingGap, compactHeadingGap, compactProgress).toFixed(2)}px`,
+      );
+      showcase.style.setProperty(
+        '--showcase-heading-shift',
+        `${lerp(expandedHeadingShift, -8, compactProgress).toFixed(2)}px`,
+      );
+      showcase.style.setProperty(
+        '--showcase-motion-gap',
+        `${lerp(expandedMotionGap, 16, compactProgress).toFixed(2)}px`,
+      );
 
       const firstMorph = smooth(0.1, 0.32, progress);
       const secondMorph = smooth(0.38, 0.6, progress);
@@ -361,18 +411,23 @@ const deviceStates = [
       showcase.classList.toggle('is-enhanced', enhanced);
 
       if (enhanced) {
+        measureExpandedLayout();
         requestUpdate();
       } else {
         showcase.removeAttribute('data-menu-open');
         showcase.removeAttribute('data-phase');
-        showcase.style.removeProperty('--showcase-heading-opacity');
-        showcase.style.removeProperty('--showcase-visual-opacity');
+        resetCompactLayout();
         phase = 'desktop';
       }
     };
 
+    const handleResize = () => {
+      if (enhanced) measureExpandedLayout();
+      requestUpdate();
+    };
+
     window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', requestUpdate);
+    window.addEventListener('resize', handleResize);
     reducedMotion.addEventListener('change', applyMode);
     compactLayout.addEventListener('change', applyMode);
 
@@ -474,30 +529,35 @@ const deviceStates = [
   }
 
   .responsive-showcase__heading {
+    position: relative;
+    z-index: 4;
     display: grid;
     grid-template-columns: minmax(9rem, 0.32fr) minmax(0, 1.16fr) minmax(16rem, 0.52fr);
-    gap: var(--space-lg);
+    gap: var(--showcase-heading-gap, var(--space-lg));
     align-items: end;
-    opacity: var(--showcase-heading-opacity, 1);
-    transition: opacity 0.12s linear;
+    transform: translate3d(0, var(--showcase-heading-shift, 0), 0);
+  }
+
+  .responsive-showcase.is-enhanced .responsive-showcase__heading {
+    will-change: transform;
   }
 
   .responsive-showcase__heading h2 {
     max-width: 62rem;
-    font-size: clamp(4rem, 7vw, 7.75rem);
+    font-size: var(--showcase-title-size, clamp(4rem, 7vw, 7.75rem));
     line-height: 0.9;
     letter-spacing: -0.065em;
   }
 
   .responsive-showcase__heading p {
-    max-width: 31rem;
+    max-width: var(--showcase-description-width, 31rem);
     color: rgb(242 240 232 / 68%);
     font-size: var(--step-1);
   }
 
   .responsive-showcase__motion {
     display: none;
-    margin-top: clamp(2rem, 3.5vw, 3.5rem);
+    margin-top: var(--showcase-motion-gap, clamp(2rem, 3.5vw, 3.5rem));
   }
 
   .responsive-showcase.is-enhanced .responsive-showcase__motion {
@@ -508,9 +568,7 @@ const deviceStates = [
     position: relative;
     display: grid;
     min-height: clamp(21rem, 46vh, 31rem);
-    opacity: var(--showcase-visual-opacity, 1);
     place-items: center;
-    transition: opacity 0.12s linear;
   }
 
   .responsive-showcase__rings {
@@ -1169,7 +1227,7 @@ const deviceStates = [
 
     .responsive-showcase__heading {
       grid-template-columns: minmax(8rem, 0.3fr) minmax(0, 1.7fr);
-      gap: var(--space-md);
+      gap: var(--showcase-heading-gap, var(--space-md));
     }
 
     .responsive-showcase__heading p {
@@ -1177,7 +1235,7 @@ const deviceStates = [
     }
 
     .responsive-showcase__heading h2 {
-      font-size: clamp(4rem, 7vw, 6rem);
+      font-size: var(--showcase-title-size, clamp(4rem, 7vw, 6rem));
     }
 
     .responsive-showcase__visual {
@@ -1196,16 +1254,16 @@ const deviceStates = [
 
     .responsive-showcase__heading p {
       grid-column: auto;
-      max-width: 38rem;
+      max-width: var(--showcase-description-width, 38rem);
     }
 
     .responsive-showcase__heading h2 {
       max-width: 44rem;
-      font-size: clamp(3.7rem, 9vw, 5rem);
+      font-size: var(--showcase-title-size, clamp(3.7rem, 9vw, 5rem));
     }
 
     .responsive-showcase__motion {
-      margin-top: 1.5rem;
+      margin-top: var(--showcase-motion-gap, 1.5rem);
     }
 
     .responsive-showcase__visual {
@@ -1226,7 +1284,7 @@ const deviceStates = [
     }
 
     .responsive-showcase__heading h2 {
-      font-size: clamp(3.5rem, 15vw, 5.25rem);
+      font-size: var(--showcase-title-size, clamp(3.5rem, 15vw, 5.25rem));
     }
 
     .responsive-showcase__inner {
@@ -1269,7 +1327,7 @@ const deviceStates = [
 
   @media (min-width: 44.01rem) and (max-height: 50rem) {
     .responsive-showcase__motion {
-      margin-top: 1.25rem;
+      margin-top: var(--showcase-motion-gap, 1.25rem);
     }
 
     .responsive-showcase__visual {
@@ -1283,11 +1341,11 @@ const deviceStates = [
 
   @media (min-width: 44.01rem) and (max-height: 42rem) {
     .responsive-showcase__heading {
-      gap: 1rem var(--space-md);
+      gap: var(--showcase-heading-gap, 1rem) var(--space-md);
     }
 
     .responsive-showcase__heading h2 {
-      font-size: clamp(3.4rem, 6vw, 5rem);
+      font-size: var(--showcase-title-size, clamp(3.4rem, 6vw, 5rem));
     }
 
     .responsive-showcase__heading p {
@@ -1295,7 +1353,7 @@ const deviceStates = [
     }
 
     .responsive-showcase__motion {
-      margin-top: 1rem;
+      margin-top: var(--showcase-motion-gap, 1rem);
     }
 
     .responsive-showcase__visual {
@@ -1308,6 +1366,15 @@ const deviceStates = [
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .responsive-showcase__heading {
+      opacity: 1;
+      transform: none;
+    }
+
+    .responsive-showcase__visual {
+      opacity: 1;
+    }
+
     .responsive-showcase__view,
     .responsive-showcase__rings,
     .responsive-showcase__signal,
